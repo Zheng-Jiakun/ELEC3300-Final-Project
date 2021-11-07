@@ -1,6 +1,6 @@
-#include "user_main.h"
+#include "lcd_task.h"
 
-void user_setup ()
+void lcd_task_setup ()
 {
 	LCD_INIT();
 	LCD_DrawString(0, 0, "Task 1:");
@@ -9,7 +9,7 @@ void user_setup ()
 	LCD_DrawString(16, 48, "Value: ");
 }
 
-void user_loop ()
+void lcd_task_loop ()
 {
     if (HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)
     {
