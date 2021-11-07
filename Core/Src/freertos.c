@@ -51,6 +51,7 @@
 /* USER CODE END Variables */
 osThreadId lcdTaskHandle;
 osThreadId ledTaskHandle;
+osThreadId sensorTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -59,6 +60,7 @@ osThreadId ledTaskHandle;
 
 void StartLcdTask(void const * argument);
 void StartLedTask(void const * argument);
+void StartSensorTask(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -110,8 +112,12 @@ void MX_FREERTOS_Init(void) {
   lcdTaskHandle = osThreadCreate(osThread(lcdTask), NULL);
 
   /* definition and creation of ledTask */
-  osThreadDef(ledTask, StartLedTask, osPriorityHigh, 0, 128);
+  osThreadDef(ledTask, StartLedTask, osPriorityNormal, 0, 128);
   ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+
+  /* definition and creation of sensorTask */
+  osThreadDef(sensorTask, StartSensorTask, osPriorityIdle, 0, 128);
+  sensorTaskHandle = osThreadCreate(osThread(sensorTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -157,6 +163,24 @@ void StartLedTask(void const * argument)
     osDelay(50);
   }
   /* USER CODE END StartLedTask */
+}
+
+/* USER CODE BEGIN Header_StartSensorTask */
+/**
+* @brief Function implementing the sensorTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartSensorTask */
+void StartSensorTask(void const * argument)
+{
+  /* USER CODE BEGIN StartSensorTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartSensorTask */
 }
 
 /* Private application code --------------------------------------------------*/

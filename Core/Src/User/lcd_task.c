@@ -1,9 +1,21 @@
 #include "lcd_task.h"
 
+const uint8_t image[][3] = {
+    #include "image.h"
+};
+
 void lcd_task_setup ()
 {
 	LCD_INIT();
 	LCD_DrawString(120, 160, "WELCOME");
+    for (uint16_t i = 0; i < 128; i++)
+    {
+        for (uint16_t j = 0; j < 128; j++)
+        {
+            uint16_t color = (image[j+i*128][0]*0x1f/0xff & 0x1f) << 11 | (image[j+i*128][1]*0x3f/0xff & 0x3f) << 5 | (image[j+i*128][2]*0x1f/0xff & 0x1f);
+            LCD_DrawDot(i, j, color);
+        }
+    }
 }
 
 void lcd_task_loop ()
