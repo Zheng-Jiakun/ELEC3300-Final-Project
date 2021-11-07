@@ -3,10 +3,7 @@
 void lcd_task_setup ()
 {
 	LCD_INIT();
-	LCD_DrawString(0, 0, "Task 1:");
-	LCD_DrawString(80, 16, " X     Y      Angle");
-	LCD_DrawString(16, 32, "Value: ");
-	LCD_DrawString(16, 48, "Value: ");
+	LCD_DrawString(120, 160, "WELCOME");
 }
 
 void lcd_task_loop ()
