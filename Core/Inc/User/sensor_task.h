@@ -3,6 +3,7 @@
 
 #include "main.h"
 #include "MPU6050.h"
+#include "AT24C02.h"
 
 void sensor_task_setup();
 void sensor_task_loop();

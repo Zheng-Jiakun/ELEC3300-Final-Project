@@ -1,6 +1,6 @@
 #include "led_task.h"
 
-#define MAX_BRIGHTNESS        50
+#define MAX_BRIGHTNESS        10
 
 void led_task_setup ()
 {

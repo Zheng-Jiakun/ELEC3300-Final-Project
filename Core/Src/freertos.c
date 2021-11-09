@@ -109,7 +109,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of lcdTask */
-  osThreadDef(lcdTask, StartLcdTask, osPriorityNormal, 0, 128);
+  osThreadDef(lcdTask, StartLcdTask, osPriorityAboveNormal, 0, 128);
   lcdTaskHandle = osThreadCreate(osThread(lcdTask), NULL);
 
   /* definition and creation of ledTask */

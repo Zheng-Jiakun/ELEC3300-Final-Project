@@ -1,8 +1,13 @@
 #include "sensor_task.h"
 
+uint8_t eep_data = 0;
+
 void sensor_task_setup ()
 {
     MPU6050_init();
+    eeprom_init();
+    eeprom_write_byte(0, 123);
+    eeprom_read_byte(0, &eep_data);
 }
 
 void sensor_task_loop ()
