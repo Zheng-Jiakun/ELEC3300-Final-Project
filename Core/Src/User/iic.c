@@ -54,8 +54,8 @@ void iic_config_scl(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 
 void iic_init(void)
 {
-	iic_config_scl(IMU_SCL_GPIO_Port, IMU_SCL_Pin);
-	iic_config_sda(IMU_SDA_GPIO_Port, IMU_SDA_Pin);
+	iic_config_scl(IIC_SCL_GPIO_Port, IIC_SCL_Pin);
+	iic_config_sda(IIC_SDA_GPIO_Port, IIC_SDA_Pin);
 }
 
 void iic_send_start(void)

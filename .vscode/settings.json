@@ -2,6 +2,10 @@
     "files.associations": {
         "lcd_task.h": "c",
         "led_task.h": "c",
-        "ws2812b.h": "c"
+        "ws2812b.h": "c",
+        "math.h": "c",
+        "mpu6050.h": "c",
+        "i2c.h": "c",
+        "sensor_task.h": "c"
     }
 }

@@ -3,7 +3,7 @@
 
 #include "stm32f1xx_hal.h"
 
-#define LED_NUM 64
+#define LED_NUM 24
 
 typedef struct 
 {

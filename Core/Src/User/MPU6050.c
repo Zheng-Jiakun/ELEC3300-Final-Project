@@ -13,7 +13,7 @@ ANGLESTRUCT accAngle, gyroAngle, filteredAngle;
 void MPU6050_init(void)
 {
     iic_init();
-
+    
     MPU6050_write_byte(MPU6050_RA_PWR_MGMT_1, 0x01); // exit sleeping mode, x axis of gyro as sampling clock
     MPU6050_write_byte(MPU6050_RA_SMPLRT_DIV, 0x04);     // clock dividor 4, 1k/4，sampling rate 25Hz。
     MPU6050_write_byte(MPU6050_RA_CONFIG, 2); // LPF, 100Hz cut off

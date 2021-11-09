@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include "lcd_task.h"
 #include "led_task.h"
+#include "sensor_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -116,7 +117,7 @@ void MX_FREERTOS_Init(void) {
   ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
   /* definition and creation of sensorTask */
-  osThreadDef(sensorTask, StartSensorTask, osPriorityIdle, 0, 128);
+  osThreadDef(sensorTask, StartSensorTask, osPriorityNormal, 0, 128);
   sensorTaskHandle = osThreadCreate(osThread(sensorTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -175,10 +176,12 @@ void StartLedTask(void const * argument)
 void StartSensorTask(void const * argument)
 {
   /* USER CODE BEGIN StartSensorTask */
+  sensor_task_setup();
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    sensor_task_loop();
+    osDelay(50);
   }
   /* USER CODE END StartSensorTask */
 }
