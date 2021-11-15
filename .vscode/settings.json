@@ -10,6 +10,8 @@
         "microphone.h": "c",
         "dht11.h": "c",
         "main.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "arm_math.h": "c",
+        "user_isr.h": "c"
     }
 }

@@ -8,35 +8,35 @@ float fft_magnitude[FFT_NUM];
 
 uint16_t fft_sample_result[FFT_SAMPLE_NUM];
 
-// arm_rfft_fast_instance_f32 s;
+arm_rfft_fast_instance_f32 s;
 
 void microphone_init ()
 {
     HAL_ADCEx_Calibration_Start(&hadc1);
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adc_raw_result, RAW_SAMPLE_NUM);
 
-    // HAL_TIM_Base_Start(&htim6);
+    HAL_TIM_Base_Start(&htim8);
     
-    // arm_rfft_fast_init_f32(&s, RAW_SAMPLE_NUM);
+    arm_rfft_fast_init_f32(&s, RAW_SAMPLE_NUM);
 }
 
-// void ProcessFFT ()
-// {
-//     for (uint16_t i = 0; i < RAW_SAMPLE_NUM; i++)
-//         fft_input[i] = RawSampleResult[i];
-//     arm_rfft_fast_f32(&s, fft_input, fft_output, 0);
+void process_fft ()
+{
+    for (uint16_t i = 0; i < RAW_SAMPLE_NUM; i++)
+        fft_input[i] = adc_raw_result[i];
+    arm_rfft_fast_f32(&s, fft_input, fft_output, 0);
 
-//   /* Process the data through the Complex Magnitude Module for
-//   calculating the magnitude at each bin */
-//     arm_cmplx_mag_f32(fft_output, fft_magnitude, FFT_NUM);
+  /* Process the data through the Complex Magnitude Module for
+  calculating the magnitude at each bin */
+    arm_cmplx_mag_f32(fft_output, fft_magnitude, FFT_NUM);
 
-//   /* Calculates maxValue and returns corresponding BIN value */
-// //   arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
+  /* Calculates maxValue and returns corresponding BIN value */
+//   arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
 
-//     fft_magnitudeFilter();
-// }
+    // fft_magnitude_filter();
+}
 
-// void fft_magnitudeFilter ()
+// void fft_magnitude_filter ()
 // {
 //     for (uint8_t i = 0; i < FFT_SAMPLE_NUM; i++)
 //     {
