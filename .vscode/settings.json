@@ -7,6 +7,9 @@
         "mpu6050.h": "c",
         "i2c.h": "c",
         "sensor_task.h": "c",
-        "microphone.h": "c"
+        "microphone.h": "c",
+        "dht11.h": "c",
+        "main.h": "c",
+        "string.h": "c"
     }
 }
