@@ -77,5 +77,7 @@ void WS2812_update()
 
 void set_led_brightness(uint8_t b)
 {
+  if (b > 255)
+    b = 255;
   led_brightness = b;
 }

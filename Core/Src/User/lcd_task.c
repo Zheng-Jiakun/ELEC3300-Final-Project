@@ -22,6 +22,7 @@ void lcd_task_setup()
     macXPT2046_CS_DISABLE();
 
     LCD_INIT();
+    LCD_set_brightness(999);
 
     // LCD_Clear(50, 80, 140, 70, RED);
     // LCD_DrawString(68, 100, "TOUCHPAD DEMO");

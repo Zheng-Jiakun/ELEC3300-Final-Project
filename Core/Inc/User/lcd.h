@@ -54,6 +54,7 @@
 #define      CMD_Set_PAGE		   0x2B	     
 #define      CMD_set_pixel		   0x2C	     
 
+void LCD_set_brightness (uint16_t);
 void            LCD_INIT		( void );
 void            LCD_Rst			( void );
 void            LCD_BackLed_Control	( FunctionalState enumState );

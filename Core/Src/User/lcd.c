@@ -1,5 +1,6 @@
 #include "lcd.h"
 #include "ascii.h"
+#include "tim.h"
 
 void LCD_REG_Config(void);
 void LCD_FillColor(uint32_t ulAmout_Point, uint16_t usColor);
@@ -11,12 +12,24 @@ void Delay(__IO uint32_t nCount)
 		;
 }
 
+void LCD_set_brightness (uint16_t b)
+{
+	if (b > 999)
+		b = 999;
+	else if (b < 50)
+		b = 50;
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, b);
+}
+
 void LCD_INIT(void)
 {
 	LCD_BackLed_Control(ENABLE);
 	LCD_Rst();
 	LCD_REG_Config();
 	LCD_Clear(0, 0, 240, 320, BACKGROUND);
+
+	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 0);
 }
 
 void LCD_Rst(void)

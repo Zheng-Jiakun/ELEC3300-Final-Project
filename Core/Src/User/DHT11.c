@@ -5,7 +5,7 @@ dht11_t dht;
 float temperature, humidty;
 
 void dht11_init(){
-	dht.htim = &htim4;
+	dht.htim = &htim5;
 	dht.port = DHT11_DATA_GPIO_Port;
 	dht.pin = DHT11_DATA_Pin;
 }
