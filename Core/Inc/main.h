@@ -59,6 +59,13 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define XPT_MOSI_Pin GPIO_PIN_2
+#define XPT_MOSI_GPIO_Port GPIOE
+#define XPT_MISO_Pin GPIO_PIN_3
+#define XPT_MISO_GPIO_Port GPIOE
+#define TOUCH_INT_Pin GPIO_PIN_4
+#define TOUCH_INT_GPIO_Port GPIOE
+#define TOUCH_INT_EXTI_IRQn EXTI4_IRQn
 #define DHT11_DATA_Pin GPIO_PIN_6
 #define DHT11_DATA_GPIO_Port GPIOE
 #define KEY2_Pin GPIO_PIN_13
@@ -71,6 +78,8 @@ void Error_Handler(void);
 #define LED_B_GPIO_Port GPIOB
 #define LCD_BL_Pin GPIO_PIN_12
 #define LCD_BL_GPIO_Port GPIOD
+#define XPT_CS_Pin GPIO_PIN_13
+#define XPT_CS_GPIO_Port GPIOD
 #define BUZZER_Pin GPIO_PIN_8
 #define BUZZER_GPIO_Port GPIOA
 #define LED_R_Pin GPIO_PIN_5
@@ -81,6 +90,8 @@ void Error_Handler(void);
 #define IIC_SDA_GPIO_Port GPIOB
 #define ESP_EN_Pin GPIO_PIN_8
 #define ESP_EN_GPIO_Port GPIOB
+#define XPT_CLK_Pin GPIO_PIN_0
+#define XPT_CLK_GPIO_Port GPIOE
 #define LCD_RST_Pin GPIO_PIN_1
 #define LCD_RST_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
