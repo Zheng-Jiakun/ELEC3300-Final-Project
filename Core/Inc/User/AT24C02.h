@@ -1,6 +1,8 @@
 #ifndef AT24C02_H
 #define AT24C02_H
 
+#include "main.h"
+#include "cmsis_os.h"
 #include "iic.h"
 
 void eeprom_init();

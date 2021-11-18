@@ -242,7 +242,7 @@ void LCD_FillColor ( uint32_t usPoint, uint16_t usColor )
 	uint32_t i = 0;
 	
 	/* memory write */
-	LCD_Write_Cmd ( CMD_SetPixel );	
+	LCD_Write_Cmd ( CMD_set_pixel );	
 		
 	for ( i = 0; i < usPoint; i ++ )
 		LCD_Write_Data ( usColor );
@@ -376,7 +376,7 @@ void LCD_DrawChar ( uint16_t usC, uint16_t usP, const char cChar )
 	
 	LCD_OpenWindow ( usC, usP, WIDTH_EN_CHAR, HEIGHT_EN_CHAR );
 	
-	LCD_Write_Cmd ( CMD_SetPixel );	
+	LCD_Write_Cmd ( CMD_set_pixel );	
 	
 	for ( ucPage = 0; ucPage < HEIGHT_EN_CHAR; ucPage ++ )
 	{
@@ -436,7 +436,7 @@ void LCD_DrawDot(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t usColor)
 	 */
 
 	LCD_OpenWindow (usCOLUMN, usPAGE, 1, 1);
-	LCD_Write_Cmd (CMD_SetPixel);	
+	LCD_Write_Cmd (CMD_set_pixel);	
 	LCD_Write_Data (usColor);
 }
 
@@ -447,7 +447,7 @@ void LCD_DrawEllipse ( uint16_t usC, uint16_t usP, uint16_t SR, uint16_t LR, uin
 	 *  Task 3 : Implement LCD_DrawEllipse by using LCD_DrawDot
 	 */
 	LCD_OpenWindow (usC - SR, usP - LR, 2*SR-1, 2*LR-1);
-	LCD_Write_Cmd (CMD_SetPixel);	
+	LCD_Write_Cmd (CMD_set_pixel);	
 	for (uint16_t p = 1; p < 2 * LR; p++)
 	{
 		for (uint16_t c = 1; c < 2 * SR; c++)
@@ -477,7 +477,7 @@ void LCD_DrawChinese (uint16_t usC, uint16_t usP, uint16_t usColor)
 
 	LCD_OpenWindow ( usC, usP, 24, 24 );
 	
-	LCD_Write_Cmd ( CMD_SetPixel );	
+	LCD_Write_Cmd ( CMD_set_pixel );	
 	
 	for ( ucPage = 0; ucPage < 24; ucPage ++ )
 	{

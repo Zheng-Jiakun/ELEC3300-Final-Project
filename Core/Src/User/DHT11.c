@@ -39,7 +39,7 @@ uint8_t dht11_read()
 	//start comm
 	set_data_pin_output();			//set pin direction as input
 	HAL_GPIO_WritePin(dht.port, dht.pin, GPIO_PIN_RESET);
-	HAL_Delay(18);					//wait 18 ms in Low state
+	osDelay(18);					//wait 18 ms in Low state
 	__disable_irq();	//disable all interupts to do only read dht otherwise miss timer
 	HAL_TIM_Base_Start(dht.htim); //start timer
 	set_data_pin_input();

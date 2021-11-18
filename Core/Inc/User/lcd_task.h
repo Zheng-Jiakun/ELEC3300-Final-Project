@@ -3,6 +3,8 @@
 
 #include "main.h"
 #include "lcd.h"
+#include "music_animation.h"
+#include "cmsis_os.h"
 
 void lcd_task_setup();
 void lcd_task_loop();

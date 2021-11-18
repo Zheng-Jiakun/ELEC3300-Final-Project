@@ -79,6 +79,8 @@ void Error_Handler(void);
 #define IIC_SCL_GPIO_Port GPIOB
 #define IIC_SDA_Pin GPIO_PIN_7
 #define IIC_SDA_GPIO_Port GPIOB
+#define ESP_EN_Pin GPIO_PIN_8
+#define ESP_EN_GPIO_Port GPIOB
 #define LCD_RST_Pin GPIO_PIN_1
 #define LCD_RST_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */

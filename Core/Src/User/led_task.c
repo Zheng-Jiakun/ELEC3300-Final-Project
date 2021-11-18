@@ -15,6 +15,6 @@ void led_task_loop ()
         LEDColor[i].g = (HAL_GetTick() * 3) % MAX_BRIGHTNESS;
         LEDColor[i].b = (HAL_GetTick() * 2) % MAX_BRIGHTNESS;
         WS2812_Update();
-        HAL_Delay(500);
+        osDelay(500);
     }
 }

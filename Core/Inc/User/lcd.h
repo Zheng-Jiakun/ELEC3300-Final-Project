@@ -49,7 +49,7 @@
 
 #define      CMD_Set_COLUMN		   0x2A	     
 #define      CMD_Set_PAGE		   0x2B	     
-#define      CMD_SetPixel		   0x2C	     
+#define      CMD_set_pixel		   0x2C	     
 
 void            LCD_INIT		( void );
 void            LCD_Rst			( void );

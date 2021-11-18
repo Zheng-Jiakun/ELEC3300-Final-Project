@@ -20,7 +20,7 @@ void eeprom_write_byte(uint16_t address, uint8_t val)
 
 	iic_send_stop();
 
-	HAL_Delay(20);
+	osDelay(20);
 }
 
 void eeprom_read_byte(uint16_t address, uint8_t *val)

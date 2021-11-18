@@ -12,6 +12,7 @@
         "main.h": "c",
         "string.h": "c",
         "arm_math.h": "c",
-        "user_isr.h": "c"
+        "user_isr.h": "c",
+        "freertos.h": "c"
     }
 }
