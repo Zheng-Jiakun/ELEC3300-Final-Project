@@ -1,106 +1,98 @@
 #include "music_animation.h"
 
-uint8_t bin_height[LCD_BIN_NUM];
+#define ABS(x)      (((x)>0)?(x):-(x))
 
-void update_bin_height ()
+uint8_t lcd_bin_height[LCD_BIN_NUM];
+uint8_t led_column_height;
+
+void update_lcd_bin_height()
 {
     for (uint8_t i = 0; i < LCD_BIN_NUM; i++)
     {
-        bin_height[i] = fft_sample_result[i] / 100;
-        if (bin_height[i] > 240)
+        lcd_bin_height[i] = fft_sample_result[i] / 100;
+        if (lcd_bin_height[i] > 240)
         {
-            bin_height[i] = 240;
+            lcd_bin_height[i] = 240;
         }
     }
 }
 
-void lcd_update_bins ()
+void lcd_update_lcd_bins()
 {
+    update_lcd_bin_height();
     // LCD_Clear(0, 0, 240, 320, 0xffff);
     for (uint8_t i = 0; i < LCD_BIN_NUM; i++)
     {
-        LCD_Clear(0, 320/LCD_BIN_NUM*i, bin_height[i], 320/LCD_BIN_NUM, 0x1234);
-        LCD_Clear(bin_height[i], 320/LCD_BIN_NUM*i, 240-bin_height[i], 320/LCD_BIN_NUM, 0xffff);
+        LCD_Clear(0, 320 / LCD_BIN_NUM * i, lcd_bin_height[i], 320 / LCD_BIN_NUM, 0x1234);
+        LCD_Clear(lcd_bin_height[i], 320 / LCD_BIN_NUM * i, 240 - lcd_bin_height[i], 320 / LCD_BIN_NUM, 0xffff);
     }
     osDelay(5);
 }
 
-// void clear_pixel (uint8_t row, uint8_t col)
-// {
-//     display_frame_buffer[row][col].r = 0;
-//     display_frame_buffer[row][col].g = 0;
-//     display_frame_buffer[row][col].b = 0;
-// }
+void clear_pixel(uint8_t index)
+{
+    led_color[index].r = 0;
+    led_color[index].g = 0;
+    led_color[index].b = 0;
+}
 
-// void set_pixel (uint8_t row, uint8_t col)
-// {
-//     if (col >= 14 && col < 16)
-//     {
-//         display_frame_buffer[row][col].r = 255/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 100/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 255/BRIGHTNESS;
-//     }
-//     else if (col >= 12 && col < 14)
-//     {
-//         display_frame_buffer[row][col].r = 148/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 0/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 211/BRIGHTNESS;
-//     }
-//     else if (col >= 10 && col < 12)
-//     {
-//         display_frame_buffer[row][col].r = 75/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 0/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 130/BRIGHTNESS;
-//     }
-//     else if (col >= 8 && col < 10)
-//     {
-//         display_frame_buffer[row][col].r = 0/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 0/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 255/BRIGHTNESS;
-//     }
-//     else if (col >= 6 && col < 8)
-//     {
-//         display_frame_buffer[row][col].r = 0/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 255/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 0/BRIGHTNESS;
-//     }
-//     else if (col >= 4 && col < 6)
-//     {
-//         display_frame_buffer[row][col].r = 255/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 255/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 0/BRIGHTNESS;
-//     }
-//     else if (col >= 2 && col < 4)
-//     {
-//         display_frame_buffer[row][col].r = 255/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 127/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 0/BRIGHTNESS;
-//     }
-//     else if (col >= 0 && col < 2)
-//     {
-//         display_frame_buffer[row][col].r = 255/BRIGHTNESS;
-//         display_frame_buffer[row][col].g = 0/BRIGHTNESS;
-//         display_frame_buffer[row][col].b = 0/BRIGHTNESS;
-//     }
-// }
+void set_pixel(uint8_t index)
+{
+    uint8_t rainbow[LED_NUM / 2][3] = {
+        {255, 255, 255},
+        {139, 140, 255},
+        {139, 0, 255},
+        {0, 0, 255},
+        {0, 127, 255},
+        {0, 200, 150},
+        {0, 255, 50},
+        {100, 255, 0},
+        {255, 255, 0},
+        {255, 165, 0},
+        {255, 50, 0},
+        {255, 0, 0},
+    };
+    led_color[index].r = rainbow[index][0];
+    led_color[index].g = rainbow[index][1];
+    led_color[index].b = rainbow[index][2];
+}
 
-// void update_columns (uint8_t columns_height[PIXEL_COL])
-// {
-//     static uint8_t Lastcolumns_height[PIXEL_COL];
-//     for (uint8_t col = 0; col < PIXEL_COL; col++)
-//     {
-//         if (columns_height[col] > PIXEL_ROW)
-//             columns_height[col] = PIXEL_ROW;
-//         if (Lastcolumns_height[col] > columns_height[col])
-//         {
-//             clear_pixel(Lastcolumns_height[col]-1, col);
-//             Lastcolumns_height[col]--;
-//         }
-//         else if (Lastcolumns_height[col] < columns_height[col])
-//         {
-//             set_pixel(Lastcolumns_height[col], col);
-//             Lastcolumns_height[col]++;
-//         }
-//         osDelay(SLIDE_SPEED);
-//     }
-// }
+void led_fill_mirror ()
+{
+    for (uint8_t i = 0; i < LED_NUM/2; i++)
+    {
+        led_color[LED_NUM-1-i].r = led_color[i].r;
+        led_color[LED_NUM-1-i].g = led_color[i].g;
+        led_color[LED_NUM-1-i].b = led_color[i].b;
+    }
+}
+
+void update_led_column_height()
+{
+    // uint32_t adc = 0;
+    // for (uint16_t i = 0; i < RAW_SAMPLE_NUM; i++)
+    //     adc += ABS(adc_raw_result[i] - 1550);
+    // led_column_height = adc / RAW_SAMPLE_NUM * 0.00001f;
+    led_column_height = ABS(adc_raw_result[0] - 1550) * 0.05f;
+}
+
+void music_update_led ()
+{
+    update_led_column_height();
+    static uint8_t last_column_height;
+    if (led_column_height > LED_NUM/2)
+        led_column_height = LED_NUM/2;
+    if (last_column_height > led_column_height)
+    {
+        clear_pixel(last_column_height-1);
+        last_column_height--;
+    }
+    else if (last_column_height < led_column_height)
+    {
+        set_pixel(last_column_height);
+        last_column_height++;
+    }
+    led_fill_mirror();
+    WS2812_update();
+    // osDelay(1);
+}

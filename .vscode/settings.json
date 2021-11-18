@@ -13,6 +13,12 @@
         "string.h": "c",
         "arm_math.h": "c",
         "user_isr.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "music_animation.h": "c",
+        "tim.h": "c",
+        "cmath": "c",
+        "*.tcc": "c",
+        "cinttypes": "c",
+        "cstdlib": "c"
     }
 }

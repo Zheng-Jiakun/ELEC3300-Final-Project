@@ -12,6 +12,7 @@
 #define RAW_SAMPLE_NUM    32
 #define FFT_NUM           RAW_SAMPLE_NUM/2
 
+extern uint16_t adc_raw_result[RAW_SAMPLE_NUM];
 extern float fft_magnitude[FFT_NUM];
 extern uint16_t fft_sample_result[FFT_SAMPLE_NUM];
 

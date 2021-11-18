@@ -5,6 +5,8 @@
 
 #define LED_NUM 24
 
+#define LED_MAX_BRIGHTNESS        255
+
 typedef struct 
 {
     uint8_t r;
@@ -12,8 +14,9 @@ typedef struct
     uint8_t b;
 } color_t;
 
-extern color_t LEDColor[LED_NUM];
-void WS2812_Init();
-void WS2812_Update();
+extern color_t led_color[LED_NUM];
+void WS2812_init();
+void WS2812_update();
+void set_led_brightness(uint8_t b);
 
 #endif

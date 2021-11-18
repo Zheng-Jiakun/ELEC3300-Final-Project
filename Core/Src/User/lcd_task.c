@@ -23,15 +23,15 @@ void lcd_task_setup()
 
     LCD_INIT();
 
-    LCD_Clear(50, 80, 140, 70, RED);
-    LCD_DrawString(68, 100, "TOUCHPAD DEMO");
-    HAL_Delay(2000);
+    // LCD_Clear(50, 80, 140, 70, RED);
+    // LCD_DrawString(68, 100, "TOUCHPAD DEMO");
+    // HAL_Delay(2000);
 
     // while( ! XPT2046_Touch_Calibrate () );
 
     LCD_GramScan(1);
-    LCD_Clear(0, 0, 240, 320, GREY);
-    LCD_Clear(90, 230, 60, 60, BLUE);
+    // LCD_Clear(0, 0, 240, 320, GREY);
+    // LCD_Clear(90, 230, 60, 60, BLUE);
 }
 
 void lcd_task_loop()
@@ -42,13 +42,7 @@ void lcd_task_loop()
         LCD_DrawCross(touchscreen.x, touchscreen.y);
         ucXPT2046_TouchFlag = 0;
     }
-    osDelay(10);
+    osDelay(100);
     // update_bin_height();
     // lcd_update_bins ();
-
-    // if (HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)
-    // {
-    //     HAL_GPIO_TogglePin(LED_R_GPIO_Port, LED_R_Pin);
-    //     while (HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET);
-    // }
 }
