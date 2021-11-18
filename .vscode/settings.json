@@ -19,6 +19,8 @@
         "cmath": "c",
         "*.tcc": "c",
         "cinttypes": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "clock_ui.h": "c",
+        "clock.h": "c"
     }
 }

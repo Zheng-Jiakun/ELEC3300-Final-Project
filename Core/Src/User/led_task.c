@@ -8,5 +8,6 @@ void led_task_setup ()
 
 void led_task_loop ()
 {
-    music_update_led();
+    // music_update_led();
+    update_clock_ui_lcd();
 }

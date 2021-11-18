@@ -6,6 +6,7 @@
 #include "AT24C02.h"
 #include "microphone.h"
 #include "DHT11.h"
+#include "clock.h"
 
 void sensor_task_setup();
 void sensor_task_loop();

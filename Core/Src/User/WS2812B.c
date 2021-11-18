@@ -1,6 +1,4 @@
-#include <WS2812B.h>
-#include <dma.h>
-#include <tim.h>
+#include "WS2812B.h"
 
 #define FRAME_SIZE (30 + 24 * LED_NUM + 80)
 
@@ -28,19 +26,19 @@ static void TIM_DMAPeriodElapsedCplt(DMA_HandleTypeDef *hdma)
 
 void WS2812_init()
 {
-  // HAL_TIM_PWM_Start_DMA(&htim3, TIM_CHANNEL_1, (uint32_t *)DMADataBuf, FRAME_SIZE);
-  htim3.hdma[TIM_DMA_ID_UPDATE]->XferCpltCallback = TIM_DMAPeriodElapsedCplt;
+  // HAL_TIM_PWM_Start_DMA(&htim5, TIM_CHANNEL_4, (uint32_t *)DMADataBuf, FRAME_SIZE);
+  htim5.hdma[TIM_DMA_ID_UPDATE]->XferCpltCallback = TIM_DMAPeriodElapsedCplt;
 
   /* Set the DMA error callback */
-  htim3.hdma[TIM_DMA_ID_UPDATE]->XferErrorCallback = TIM_DMAError;
+  htim5.hdma[TIM_DMA_ID_UPDATE]->XferErrorCallback = TIM_DMAError;
 
   /* Enable the DMA channel */
-  HAL_DMA_Start_IT(htim3.hdma[TIM_DMA_ID_UPDATE], (uint32_t)DMADataBuf, (uint32_t)&htim3.Instance->CCR1, FRAME_SIZE);
+  HAL_DMA_Start_IT(htim5.hdma[TIM_DMA_ID_UPDATE], (uint32_t)DMADataBuf, (uint32_t)&htim5.Instance->CCR4, FRAME_SIZE);
 
   /* Enable the TIM Capture/Compare 1 DMA request */
-  __HAL_TIM_ENABLE_DMA(&htim3, TIM_DMA_UPDATE);
+  __HAL_TIM_ENABLE_DMA(&htim5, TIM_DMA_UPDATE);
 
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_4);
 }
 
 #define ONE_PULSE 8
@@ -80,4 +78,9 @@ void set_led_brightness(uint8_t b)
   if (b > 255)
     b = 255;
   led_brightness = b;
+}
+
+void clear_all_led ()
+{
+  memset(led_color, 0, sizeof(led_color));
 }

@@ -29,14 +29,14 @@ void lcd_update_lcd_bins()
     osDelay(5);
 }
 
-void clear_pixel(uint8_t index)
+static void led_clear_pixel(uint8_t index)
 {
     led_color[index].r = 0;
     led_color[index].g = 0;
     led_color[index].b = 0;
 }
 
-void set_pixel(uint8_t index)
+static void led_set_pixel(uint8_t index)
 {
     uint8_t rainbow[LED_NUM / 2][3] = {
         {255, 255, 255},
@@ -84,12 +84,12 @@ void music_update_led ()
         led_column_height = LED_NUM/2;
     if (last_column_height > led_column_height)
     {
-        clear_pixel(last_column_height-1);
+        led_clear_pixel(last_column_height-1);
         last_column_height--;
     }
     else if (last_column_height < led_column_height)
     {
-        set_pixel(last_column_height);
+        led_set_pixel(last_column_height);
         last_column_height++;
     }
     led_fill_mirror();

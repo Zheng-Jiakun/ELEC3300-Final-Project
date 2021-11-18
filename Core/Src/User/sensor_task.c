@@ -10,6 +10,7 @@ void sensor_task_setup ()
     // eeprom_write_byte(0, 123);
     // eeprom_read_byte(0, &eep_data);
     microphone_init();
+    clock_init();
 }
 
 void sensor_task_loop ()

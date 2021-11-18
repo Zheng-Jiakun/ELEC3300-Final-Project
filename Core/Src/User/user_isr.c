@@ -12,3 +12,8 @@ void exti4_isr()
         check_touchscreen();
     }
 }
+
+void uart3_dma_isr()
+{
+    calibrate_date_time();
+}
