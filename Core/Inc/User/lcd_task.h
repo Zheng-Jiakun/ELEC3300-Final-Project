@@ -7,6 +7,7 @@
 #include "cmsis_os.h"
 #include "xpt2046.h"
 #include "clock.h"
+#include "adc.h"
 
 void lcd_task_setup();
 void lcd_task_loop();

@@ -83,4 +83,5 @@ void set_led_brightness(uint8_t b)
 void clear_all_led ()
 {
   memset(led_color, 0, sizeof(led_color));
+  WS2812_update();
 }

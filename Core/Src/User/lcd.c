@@ -729,5 +729,36 @@ void lcd_draw_icon(uint8_t x, uint8_t y, uint8_t size_x, uint8_t size_y, const u
 
 void lcd_draw_icon_wifi(uint8_t x, uint8_t y)
 {
-	lcd_draw_icon(x, y, 32, 32, *wifi);
+	lcd_draw_icon(x, y, 32, 32, *wifi_code);
+}
+
+void lcd_draw_icon_clock(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 120, 120, *clock_code);
+}
+
+void lcd_draw_icon_bird(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 120, 120, *bird_code);
+}
+
+void lcd_draw_icon_snake(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 120, 120, *snake_code);
+}
+
+void lcd_draw_icon_gallery(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 120, 120, *gallery_code);
+}
+
+void lcd_draw_icon_music(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 120, 120, *music_code);
+}
+
+
+void lcd_draw_icon_game(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 120, 120, *game_code);
 }

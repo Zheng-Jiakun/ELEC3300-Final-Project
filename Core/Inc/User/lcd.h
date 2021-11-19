@@ -81,6 +81,12 @@ void LCD_DrawString_Color ( uint16_t usC, uint16_t usP, const char * pStr, uint1
 void LCD_GramScan ( uint8_t ucOption );
 
 void lcd_draw_icon_wifi(uint8_t x, uint8_t y);
+void lcd_draw_icon_clock(uint8_t x, uint8_t y);
+void lcd_draw_icon_bird(uint8_t x, uint8_t y);
+void lcd_draw_icon_snake(uint8_t x, uint8_t y);
+void lcd_draw_icon_gallery(uint8_t x, uint8_t y);
+void lcd_draw_icon_music(uint8_t x, uint8_t y);
+void lcd_draw_icon_game(uint8_t x, uint8_t y);
 
 #endif 
 

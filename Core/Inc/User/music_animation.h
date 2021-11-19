@@ -15,7 +15,7 @@
 #define LCD_BIN_NUM         16
 
 void update_lcd_bin_height ();
-void lcd_update_lcd_bins ();
+void update_lcd_bins ();
 void update_led_column_height();
 void music_update_led ();
 

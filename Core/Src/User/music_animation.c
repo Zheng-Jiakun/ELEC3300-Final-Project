@@ -17,7 +17,7 @@ void update_lcd_bin_height()
     }
 }
 
-void lcd_update_lcd_bins()
+void update_lcd_bins()
 {
     update_lcd_bin_height();
     // LCD_Clear(0, 0, 240, 320, 0xffff);
