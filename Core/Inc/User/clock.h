@@ -7,6 +7,7 @@
 #include "lcd.h"
 #include "WS2812B.h"
 #include "usart.h"
+#include "DHT11.h"
 
 extern uint8_t internet_flag;
 

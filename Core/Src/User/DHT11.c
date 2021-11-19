@@ -2,7 +2,7 @@
 
 dht11_t dht;
 
-float temperature, humidty;
+uint8_t temperature, humidity;
 
 void dht11_init(){
 	dht.htim = &htim6;
@@ -126,7 +126,7 @@ uint8_t dht11_read()
 		RH_dec += mData[i];
 		RH_dec <<= 1;
 	}
-	// memcpy(&humidty, &value_buffer, sizeof(value_buffer));
+	// memcpy(&humidity, &value_buffer, sizeof(value_buffer));
 
 	//get temp value from data buffer
 	for(int i = 16; i < 24; i++)
@@ -150,7 +150,7 @@ uint8_t dht11_read()
 
 	if (RH_int + RH_dec + T_int + T_dec == parity)
 	{
-		humidty = RH_int >> 1;
+		humidity = RH_int >> 1;
 		temperature = T_int >> 1;
 	}
 

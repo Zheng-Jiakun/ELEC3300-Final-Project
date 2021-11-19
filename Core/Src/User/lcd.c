@@ -711,6 +711,30 @@ void LCD_DrawChar_2448_Rotate(uint16_t usC, uint16_t usP, uint16_t usColor, cons
 	}
 }
 
+void LCD_DrawString_2448_Rotate(uint16_t usC, uint16_t usP, const char *pStr)
+{
+	while (*pStr != '\0')
+	{
+		if ((usC - LCD_DispWindow_Start_COLUMN + WIDTH_EN_CHAR) > LCD_DispWindow_COLUMN)
+		{
+			usC = LCD_DispWindow_Start_COLUMN;
+			usP += HEIGHT_EN_CHAR;
+		}
+
+		if ((usP - LCD_DispWindow_Start_PAGE + HEIGHT_EN_CHAR) > LCD_DispWindow_PAGE)
+		{
+			usC = LCD_DispWindow_Start_COLUMN;
+			usP = LCD_DispWindow_Start_PAGE;
+		}
+
+		LCD_DrawChar_2448_Rotate(usC, usP, BLUE, *pStr);
+
+		pStr++;
+
+		usP += 24;
+	}
+}
+
 void lcd_draw_icon(uint8_t x, uint8_t y, uint8_t size_x, uint8_t size_y, const uint8_t *code)
 {
 	LCD_OpenWindow(x, y, size_x, size_y);
@@ -729,7 +753,7 @@ void lcd_draw_icon(uint8_t x, uint8_t y, uint8_t size_x, uint8_t size_y, const u
 
 void lcd_draw_icon_wifi(uint8_t x, uint8_t y)
 {
-	lcd_draw_icon(x, y, 32, 32, *wifi_code);
+	lcd_draw_icon(x, y, 64, 64, *wifi_code);
 }
 
 void lcd_draw_icon_clock(uint8_t x, uint8_t y)
@@ -757,8 +781,17 @@ void lcd_draw_icon_music(uint8_t x, uint8_t y)
 	lcd_draw_icon(x, y, 120, 120, *music_code);
 }
 
-
 void lcd_draw_icon_game(uint8_t x, uint8_t y)
 {
 	lcd_draw_icon(x, y, 120, 120, *game_code);
+}
+
+void lcd_draw_icon_temperature(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 64, 64, *temperature_code);
+}
+
+void lcd_draw_icon_humidity(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 64, 64, *humidity_code);
 }

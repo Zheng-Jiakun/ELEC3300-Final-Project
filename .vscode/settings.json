@@ -23,6 +23,7 @@
         "clock_ui.h": "c",
         "clock.h": "c",
         "lcd.h": "c",
-        "image.h": "c"
+        "image.h": "c",
+        "cmsis_os.h": "c"
     }
 }

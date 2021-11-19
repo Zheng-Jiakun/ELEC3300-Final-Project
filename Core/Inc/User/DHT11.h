@@ -7,6 +7,8 @@
 #include "tim.h"
 #include "string.h"
 
+extern uint8_t temperature;
+extern uint8_t humidity;
 
 typedef struct {
 	GPIO_TypeDef* port;	///GPIO Port ex:GPIOA

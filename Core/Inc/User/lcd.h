@@ -45,8 +45,8 @@
 #define      GREEN                         0x07E0	    
 #define      RED                           0xF800	  
 #define      MAGENTA                       0xF81F	 
-#define      CYAN                          0x7FFF	   
-#define      YELLOW                        0xFFE0	 
+#define      CYAN                          0x73FF	   
+#define      YELLOW                        0xFFE5	 
 #define      BACKGROUND		           WHITE  
 
 
@@ -87,6 +87,9 @@ void lcd_draw_icon_snake(uint8_t x, uint8_t y);
 void lcd_draw_icon_gallery(uint8_t x, uint8_t y);
 void lcd_draw_icon_music(uint8_t x, uint8_t y);
 void lcd_draw_icon_game(uint8_t x, uint8_t y);
+void lcd_draw_icon_temperature(uint8_t x, uint8_t y);
+void lcd_draw_icon_humidity(uint8_t x, uint8_t y);
+void LCD_DrawString_2448_Rotate(uint16_t usC, uint16_t usP, const char *pStr);
 
 #endif 
 

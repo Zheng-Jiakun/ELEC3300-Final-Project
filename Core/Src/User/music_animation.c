@@ -29,14 +29,14 @@ void update_lcd_bins()
     osDelay(5);
 }
 
-static void led_clear_pixel(uint8_t index)
+void led_clear_pixel(uint8_t index)
 {
     led_color[index].r = 0;
     led_color[index].g = 0;
     led_color[index].b = 0;
 }
 
-static void led_set_pixel(uint8_t index)
+void led_set_pixel(uint8_t index)
 {
     uint8_t rainbow[LED_NUM / 2][3] = {
         {255, 255, 255},

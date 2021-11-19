@@ -1,18 +1,5 @@
 #include "lcd_task.h"
 
-typedef enum
-{
-    CLOCK = 0,
-    GALLERY,
-    GAME,
-    SNAKE,
-    BIRD,
-    MENU,
-    MUSIC,
-} sys_mode_t;
-
-sys_mode_t system_mode = CLOCK;
-
 void lcd_task_setup()
 {
     // LCD_INIT();
@@ -35,10 +22,23 @@ void lcd_task_setup()
 
 void lcd_task_loop()
 {
+    static sys_mode_t last_mode;
+    if (last_mode != system_mode)
+    {
+        LCD_Clear(0, 0, 240, 320, 0xffff);
+    }
+    last_mode = system_mode;
+
     switch (system_mode)
     {
+    case WELCOME:
+        LCD_DrawString_2448_Rotate(108, 76, "WELCOME");
+        LCD_DrawChinese(50, 112, BLUE);
+        osDelay(2500);
+        system_mode = CLOCK;
+        break;
+
     case CLOCK:
-        update_clock_ui_led();
         update_clock_ui_lcd();
         if (ucXPT2046_TouchFlag)
         {
@@ -90,7 +90,6 @@ void lcd_task_loop()
         break;
 
     case MUSIC:
-        music_update_led();
         update_lcd_bins();
         break;
 
@@ -104,14 +103,6 @@ void lcd_task_loop()
     {
         system_mode = MENU;
     }
-
-    static sys_mode_t last_mode;
-    if (last_mode != system_mode)
-    {
-        LCD_Clear(0, 0, 240, 320, 0xffff);
-        clear_all_led();
-    }
-    last_mode = system_mode;
 
     osDelay(100);
 }

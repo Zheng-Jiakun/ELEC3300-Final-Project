@@ -96,6 +96,20 @@ void Error_Handler(void);
 #define LCD_RST_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
 
+typedef enum
+{
+    CLOCK = 0,
+    GALLERY,
+    GAME,
+    SNAKE,
+    BIRD,
+    MENU,
+    MUSIC,
+    WELCOME,
+} sys_mode_t;
+
+extern sys_mode_t system_mode;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
