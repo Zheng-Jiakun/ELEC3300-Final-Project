@@ -71,11 +71,16 @@ void            LCD_DrawString		( uint16_t usC, uint16_t usP, const char * pStr)
 void            LCD_DrawDot		( uint16_t usC, uint16_t usP, uint16_t usColor );
 void 		LCD_DrawEllipse		( uint16_t usC, uint16_t usP, uint16_t SR, uint16_t LR, uint16_t usColor);
 void LCD_DrawChinese (uint16_t usC, uint16_t usP, uint16_t usColor);
+void LCD_DrawChar_2448_Rotate(uint16_t usC, uint16_t usP, uint16_t usColor, const char c);
+void LCD_DrawChar_2040_Rotate(uint16_t usC, uint16_t usP, uint16_t usColor, const char c);
+
 
 void LCD_DrawCross ( uint16_t usX, uint16_t usY );
 void LCD_DrawChar_Color ( uint16_t usC, uint16_t usP, const char cChar, uint16_t usColor_Background, uint16_t usColor_Foreground );
 void LCD_DrawString_Color ( uint16_t usC, uint16_t usP, const char * pStr, uint16_t usColor_Background, uint16_t usColor_Foreground );
 void LCD_GramScan ( uint8_t ucOption );
+
+void lcd_draw_icon_wifi(uint8_t x, uint8_t y);
 
 #endif 
 

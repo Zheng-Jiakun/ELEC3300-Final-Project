@@ -1,5 +1,6 @@
 #include "lcd.h"
 #include "ascii.h"
+#include "image.h"
 #include "tim.h"
 
 void LCD_REG_Config(void);
@@ -12,7 +13,7 @@ void Delay(__IO uint32_t nCount)
 		;
 }
 
-void LCD_set_brightness (uint16_t b)
+void LCD_set_brightness(uint16_t b)
 {
 	if (b > 999)
 		b = 999;
@@ -391,75 +392,6 @@ void LCD_DrawString(uint16_t usC, uint16_t usP, const char *pStr)
 	}
 }
 
-//Task 2
-void LCD_DrawDot(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t usColor)
-{
-	/*
-	 *  Task 2 : Implement the LCD_DrawDot to turn on a particular dot on the LCD.
-	 */
-
-	LCD_OpenWindow(usCOLUMN, usPAGE, 1, 1);
-	LCD_Write_Cmd(CMD_set_pixel);
-	LCD_Write_Data(usColor);
-}
-
-//Task 3
-void LCD_DrawEllipse(uint16_t usC, uint16_t usP, uint16_t SR, uint16_t LR, uint16_t usColor)
-{
-	/*
-	 *  Task 3 : Implement LCD_DrawEllipse by using LCD_DrawDot
-	 */
-	LCD_OpenWindow(usC - SR, usP - LR, 2 * SR - 1, 2 * LR - 1);
-	LCD_Write_Cmd(CMD_set_pixel);
-	for (uint16_t p = 1; p < 2 * LR; p++)
-	{
-		for (uint16_t c = 1; c < 2 * SR; c++)
-		{
-			double track = (double)((c - SR) * (c - SR)) / (SR * SR) + (double)((p - LR) * (p - LR)) / (LR * LR);
-			if (track >= 0.92 && track <= 1.00)
-				LCD_Write_Data(usColor);
-			else
-				LCD_Write_Data(WHITE);
-		}
-	}
-}
-
-void LCD_DrawChinese(uint16_t usC, uint16_t usP, uint16_t usColor)
-{
-	const uint8_t code[] =
-		{
-			/*-- ID:0,字符:"锟",ASCII编码:EFBF,对应字:宽x高=24x24,画布:宽W=24 高H=24,共72字节*/
-			0x10, 0x00, 0x00, 0x70, 0x08, 0x18, 0x30, 0xF8, 0x3F, 0x30, 0x18, 0x18, 0x98, 0x19, 0x18, 0xF8,
-			0xFB, 0x1F, 0x18, 0x18, 0x18, 0x0C, 0x18, 0x18, 0x84, 0x18, 0x18, 0xFE, 0xF9, 0x1F, 0x31, 0x08,
-			0x01, 0x30, 0x00, 0x07, 0xB0, 0x39, 0x23, 0xFE, 0x1B, 0x73, 0x30, 0x58, 0x1B, 0x30, 0xF8, 0x07,
-			0x30, 0x18, 0x03, 0x30, 0x1A, 0x23, 0x30, 0x19, 0x23, 0xF0, 0x58, 0x23, 0x70, 0x38, 0x63, 0x38,
-			0x1C, 0x7F, 0x10, 0x08, 0x3E, 0x00, 0x00, 0x00};
-
-	uint8_t ucTemp, ucPage, ucColumn;
-
-	LCD_OpenWindow(usC, usP, 24, 24);
-
-	LCD_Write_Cmd(CMD_set_pixel);
-
-	for (ucPage = 0; ucPage < 24; ucPage++)
-	{
-		for (uint8_t i = 0; i < 3; i++)
-		{
-			ucTemp = code[ucPage * 3 + i];
-			for (ucColumn = 0; ucColumn < 8; ucColumn++)
-			{
-				if (ucTemp & 0x01)
-					LCD_Write_Data(usColor);
-
-				else
-					LCD_Write_Data(0xFFFF);
-
-				ucTemp >>= 1;
-			}
-		}
-	}
-}
-
 void LCD_DrawChar_Color(uint16_t usC, uint16_t usP, const char cChar, uint16_t usColor_Background, uint16_t usColor_Foreground)
 {
 	uint8_t ucTemp, ucRelativePositon, ucPage, ucColumn;
@@ -612,4 +544,190 @@ void LCD_GramScan(uint8_t ucOption)
 
 	/* write gram start */
 	LCD_Write_Cmd(0x2C);
+}
+
+//Task 2
+void LCD_DrawDot(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t usColor)
+{
+	/*
+	 *  Task 2 : Implement the LCD_DrawDot to turn on a particular dot on the LCD.
+	 */
+
+	LCD_OpenWindow(usCOLUMN, usPAGE, 1, 1);
+	LCD_Write_Cmd(CMD_set_pixel);
+	LCD_Write_Data(usColor);
+}
+
+//Task 3
+void LCD_DrawEllipse(uint16_t usC, uint16_t usP, uint16_t SR, uint16_t LR, uint16_t usColor)
+{
+	/*
+	 *  Task 3 : Implement LCD_DrawEllipse by using LCD_DrawDot
+	 */
+	LCD_OpenWindow(usC - SR, usP - LR, 2 * SR - 1, 2 * LR - 1);
+	LCD_Write_Cmd(CMD_set_pixel);
+	for (uint16_t p = 1; p < 2 * LR; p++)
+	{
+		for (uint16_t c = 1; c < 2 * SR; c++)
+		{
+			double track = (double)((c - SR) * (c - SR)) / (SR * SR) + (double)((p - LR) * (p - LR)) / (LR * LR);
+			if (track >= 0.92 && track <= 1.00)
+				LCD_Write_Data(usColor);
+			else
+				LCD_Write_Data(WHITE);
+		}
+	}
+}
+
+void LCD_DrawChinese(uint16_t usC, uint16_t usP, uint16_t usColor)
+{
+	const uint8_t code[][72] =
+		{
+			/*纵向取模上高位,数据排列:从上到下从左到右 */
+			//"欢",
+			{0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x01, 0x80,
+			 0x10, 0x01, 0xA0, 0x30, 0x01, 0x10, 0xE0, 0x01,
+			 0x0F, 0x80, 0x03, 0x3F, 0x00, 0x03, 0xFB, 0x80,
+			 0x03, 0xC1, 0xC0, 0x00, 0x00, 0x08, 0x00, 0x60,
+			 0x18, 0x01, 0xC0, 0x70, 0x07, 0xBB, 0xC0, 0xFD,
+			 0xBF, 0x00, 0x71, 0x03, 0x00, 0x41, 0x01, 0xC0,
+			 0x03, 0x20, 0x70, 0x03, 0xC0, 0x38, 0x03, 0x80,
+			 0x38, 0x01, 0x80, 0x18, 0x00, 0x00, 0x18, 0x00,
+			 0x00, 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00},
+
+			//"迎",
+			{0x00, 0x00, 0x00, 0x00, 0x20, 0x60, 0x00, 0x20,
+			 0x60, 0x10, 0x60, 0x60, 0x18, 0x7E, 0x60, 0x1C,
+			 0x7F, 0xC0, 0x0C, 0x20, 0x60, 0x00, 0x00, 0x60,
+			 0x02, 0x00, 0x20, 0x03, 0xFE, 0x20, 0x07, 0xFC,
+			 0x30, 0x0C, 0x18, 0x30, 0x78, 0x30, 0x18, 0x70,
+			 0x00, 0x18, 0x33, 0xFF, 0xF8, 0x03, 0xFF, 0xFC,
+			 0x06, 0x10, 0x0C, 0x04, 0x18, 0x0C, 0x0F, 0xF8,
+			 0x0C, 0x07, 0xF0, 0x0C, 0x07, 0x00, 0x0C, 0x00,
+			 0x00, 0x18, 0x00, 0x00, 0x18, 0x00, 0x00, 0x18},
+
+			//"使",
+			{0x00, 0x04, 0x00, 0x00, 0x0C, 0x00, 0x00, 0x18,
+			 0x00, 0x00, 0x30, 0x00, 0x00, 0xE0, 0x00, 0x03,
+			 0xFF, 0xFC, 0x3F, 0x7F, 0xF8, 0x7C, 0x00, 0x00,
+			 0x30, 0x00, 0x08, 0x00, 0x42, 0x08, 0x00, 0x7A,
+			 0x18, 0x02, 0x4B, 0x30, 0x02, 0x49, 0xE0, 0x06,
+			 0x4F, 0xC0, 0xFF, 0xFF, 0x40, 0x7F, 0xC8, 0x60,
+			 0x0C, 0x88, 0x30, 0x0C, 0xB8, 0x18, 0x0D, 0xF8,
+			 0x1C, 0x09, 0xC0, 0x1C, 0x00, 0xC0, 0x0C, 0x00,
+			 0x00, 0x0C, 0x00, 0x00, 0x0C, 0x00, 0x00, 0x0C},
+
+			//"用",
+			{0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00,
+			 0x0C, 0x00, 0x00, 0x18, 0x00, 0x00, 0x70, 0x1C,
+			 0x7F, 0xC0, 0x1F, 0xFF, 0x00, 0x18, 0x00, 0x00,
+			 0x18, 0x84, 0x00, 0x10, 0x8C, 0x00, 0x18, 0x8C,
+			 0x00, 0x1F, 0xFF, 0xF0, 0x1F, 0x88, 0x00, 0x31,
+			 0x88, 0x00, 0x31, 0x98, 0x00, 0x20, 0x08, 0x10,
+			 0x30, 0x00, 0x1C, 0x3F, 0xFF, 0xFC, 0x3F, 0xFF,
+			 0xFC, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+		};
+
+	uint8_t ucTemp, ucPage, ucColumn;
+
+	for (uint8_t c = 0; c < 4; c++)
+	{
+		LCD_OpenWindow(usC, usP + c * 24, 24, 24);
+
+		LCD_Write_Cmd(CMD_set_pixel);
+
+		for (ucPage = 0; ucPage < 24; ucPage++)
+		{
+			for (uint8_t i = 0; i < 3; i++)
+			{
+				ucTemp = code[c][ucPage * 3 + (2 - i)];
+				for (ucColumn = 0; ucColumn < 8; ucColumn++)
+				{
+					if (ucTemp & 0x01)
+						LCD_Write_Data(usColor);
+
+					else
+						LCD_Write_Data(0xFFFF);
+
+					ucTemp >>= 1;
+				}
+			}
+		}
+	}
+}
+
+void LCD_DrawChar_2040_Rotate(uint16_t usC, uint16_t usP, uint16_t usColor, const char c)
+{
+	uint8_t ucTemp, ucPage, ucColumn;
+
+	LCD_OpenWindow(usC, usP, 40, 20);
+
+	LCD_Write_Cmd(CMD_set_pixel);
+
+	for (ucPage = 0; ucPage < 20; ucPage++)
+	{
+		for (int8_t i = 5 - 1; i >= 0; i--)
+		{
+			ucTemp = ucAscii_2040[(uint8_t)c - 32][ucPage * 5 + i];
+			for (ucColumn = 0; ucColumn < 8; ucColumn++)
+			{
+				if (ucTemp & 0x01)
+					LCD_Write_Data(usColor);
+
+				else
+					LCD_Write_Data(0xFFFF);
+
+				ucTemp >>= 1;
+			}
+		}
+	}
+}
+
+void LCD_DrawChar_2448_Rotate(uint16_t usC, uint16_t usP, uint16_t usColor, const char c)
+{
+	uint8_t ucTemp, ucPage, ucColumn;
+
+	LCD_OpenWindow(usC, usP, 48, 24);
+
+	LCD_Write_Cmd(CMD_set_pixel);
+
+	for (ucPage = 0; ucPage < 24; ucPage++)
+	{
+		for (int8_t i = 6 - 1; i >= 0; i--)
+		{
+			ucTemp = ucAscii_2448[(uint8_t)c - 32][ucPage * 6 + i];
+			for (ucColumn = 0; ucColumn < 8; ucColumn++)
+			{
+				if (ucTemp & 0x01)
+					LCD_Write_Data(usColor);
+
+				else
+					LCD_Write_Data(0xFFFF);
+
+				ucTemp >>= 1;
+			}
+		}
+	}
+}
+
+void lcd_draw_icon(uint8_t x, uint8_t y, uint8_t size_x, uint8_t size_y, const uint8_t *code)
+{
+	LCD_OpenWindow(x, y, size_x, size_y);
+	LCD_Write_Cmd(CMD_set_pixel);
+	for (uint16_t i = 0; i < size_y; i++)
+	{
+		for (uint16_t j = 0; j < size_x; j++)
+		{
+			uint16_t color =
+				(*(code + (j + i * size_y) * 3 + 0) * 0x1f / 0xff & 0x1f) << 11 | (*(code + (j + i * size_y) * 3 + 1) * 0x3f / 0xff & 0x3f) << 5 | (*(code + (j + i * size_y) * 3 + 2) * 0x1f / 0xff & 0x1f);
+			// LCD_DrawDot(i, j, color);
+			LCD_Write_Data(color);
+		}
+	}
+}
+
+void lcd_draw_icon_wifi(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 32, 32, *wifi);
 }
