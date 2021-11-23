@@ -1,7 +1,7 @@
 #include "misc_sensors.h"
 
 uint16_t adc3_data[4];
-uint8_t vibration_flag = 0;
+uint8_t vibration_flag = 0, buzzer_flag = 0;
 
 void misc_sensors_init()
 {
@@ -31,6 +31,29 @@ uint16_t get_joyy_value()
 void set_vibration_flag()
 {
     vibration_flag = 1;
+}
+
+void set_buzzer_flag()
+{
+    buzzer_flag = 1;
+}
+
+void buzzer_service()
+{
+    static uint32_t start_tick;
+    static uint8_t start_flag = 0;
+    if (start_flag == 0 && buzzer_flag == 1)
+    {
+        HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
+        start_tick = HAL_GetTick();
+        start_flag = 1;
+    }
+    else if (start_flag == 1 && HAL_GetTick() - start_tick > 50)
+    {
+        HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+        start_flag = 0;
+        buzzer_flag = 0;
+    }
 }
 
 void vibration_service()

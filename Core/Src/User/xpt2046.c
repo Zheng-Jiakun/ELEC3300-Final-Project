@@ -441,4 +441,5 @@ void check_touchscreen(void)
 	ucXPT2046_TouchFlag = 1;
 	XPT2046_Get_TouchedPoint(&touchscreen, &strXPT2046_TouchPara);
 	set_vibration_flag();
+	set_buzzer_flag();
 }

@@ -17,5 +17,7 @@ uint16_t get_joyx_value();
 uint16_t get_joyy_value();
 void set_vibration_flag();
 void vibration_service();
+void set_buzzer_flag();
+void buzzer_service();
 
 #endif

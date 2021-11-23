@@ -80,10 +80,12 @@ void sensor_task_loop()
     }
     
     vibration_service();
+    buzzer_service();
 
     if (get_capkey_value() < 2000 || HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
     {
         system_mode = MENU;
         set_vibration_flag();
+        set_buzzer_flag();
     }
 }
