@@ -3,7 +3,7 @@
 void led_task_setup()
 {
     WS2812_init();
-    set_led_brightness(10);
+    set_led_brightness(50);
 }
 
 void led_task_loop()

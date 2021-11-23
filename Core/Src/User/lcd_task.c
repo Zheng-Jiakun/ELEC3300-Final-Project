@@ -22,6 +22,7 @@ void lcd_task_setup()
 
 void lcd_task_loop()
 {
+    char char_buf[50];
     static sys_mode_t last_mode;
     if (last_mode != system_mode)
     {
@@ -93,15 +94,17 @@ void lcd_task_loop()
         update_lcd_bins();
         break;
 
+    case COMPASS:
+        sprintf(char_buf, "x: %d ", accAngle.angleX);
+        LCD_DrawString(0, 0, char_buf);
+        sprintf(char_buf, "y: %d ", accAngle.angleY);
+        LCD_DrawString(0, 80, char_buf);
+        sprintf(char_buf, "z: %d ", compass_angle);
+        LCD_DrawString(0, 160, char_buf);
+        break;
+
     default:
         break;
-    }
-
-    HAL_ADC_Start(&hadc2);
-    uint16_t cap_key = HAL_ADC_GetValue(&hadc2);
-    if (cap_key < 2000 || HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
-    {
-        system_mode = MENU;
     }
 
     osDelay(100);

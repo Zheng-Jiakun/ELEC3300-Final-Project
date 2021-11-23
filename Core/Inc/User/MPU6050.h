@@ -599,34 +599,32 @@ void MPU6050_update_data (void);
 /*寄存器是用来验证设备的身份的 默认值是0X34*/
 #define MPU6050_RA_WHO_AM_I         0x75
 //bit6-bit1 设备身份验证 0x34 最高位和最低位都剔除掉
- 
- 
- 
- 
+
+
 typedef struct ACCELSTRUCT
 {
     float accelX;
     float accelY;
     float accelZ;
-}ACCELSTRUCT;
+} ACCELSTRUCT;
  
 typedef struct GYROSTRUCT
 {
     float gyroX;
     float gyroY;
     float gyroZ;
-}GYROSTRUCT;
+} GYROSTRUCT;
 
 typedef struct 
 {
-	float angleX;
-	float angleY;
-	float angleZ;
+	int8_t angleX;
+	int8_t angleY;
+	int8_t angleZ;
 } ANGLESTRUCT;
- 
+
 extern struct ACCELSTRUCT       accelStruct ;
 extern struct GYROSTRUCT	gyroStruct ;
 
-extern ANGLESTRUCT accAngle, gyroAngle, filteredAngle;
+extern ANGLESTRUCT accAngle, filteredAngle;
 
 #endif

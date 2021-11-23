@@ -13,7 +13,7 @@ extern uint8_t humidity;
 typedef struct {
 	GPIO_TypeDef* port;	///GPIO Port ex:GPIOA
 	uint16_t pin; ///GPIO pin ex:GPIO_PIN_2
-	TIM_HandleTypeDef *htim; /// timer for measure time ex:htim3
+	TIM_HandleTypeDef *htim; /// timer for measure time
 } dht11_t;
 
 void dht11_init();

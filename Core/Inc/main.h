@@ -70,8 +70,20 @@ void Error_Handler(void);
 #define DHT11_DATA_GPIO_Port GPIOE
 #define KEY2_Pin GPIO_PIN_13
 #define KEY2_GPIO_Port GPIOC
+#define JOY_X_Pin GPIO_PIN_2
+#define JOY_X_GPIO_Port GPIOC
+#define JOY_Y_Pin GPIO_PIN_3
+#define JOY_Y_GPIO_Port GPIOC
 #define KEY1_Pin GPIO_PIN_0
 #define KEY1_GPIO_Port GPIOA
+#define KEY_CAP_Pin GPIO_PIN_1
+#define KEY_CAP_GPIO_Port GPIOA
+#define LDR_Pin GPIO_PIN_2
+#define LDR_GPIO_Port GPIOA
+#define WS2812_Pin GPIO_PIN_3
+#define WS2812_GPIO_Port GPIOA
+#define MIC_Pin GPIO_PIN_7
+#define MIC_GPIO_Port GPIOA
 #define LED_G_Pin GPIO_PIN_0
 #define LED_G_GPIO_Port GPIOB
 #define LED_B_Pin GPIO_PIN_1
@@ -82,6 +94,8 @@ void Error_Handler(void);
 #define XPT_CS_GPIO_Port GPIOD
 #define BUZZER_Pin GPIO_PIN_8
 #define BUZZER_GPIO_Port GPIOA
+#define MOTOR_Pin GPIO_PIN_12
+#define MOTOR_GPIO_Port GPIOA
 #define LED_R_Pin GPIO_PIN_5
 #define LED_R_GPIO_Port GPIOB
 #define IIC_SCL_Pin GPIO_PIN_6
@@ -106,6 +120,7 @@ typedef enum
     MENU,
     MUSIC,
     WELCOME,
+    COMPASS,
 } sys_mode_t;
 
 extern sys_mode_t system_mode;

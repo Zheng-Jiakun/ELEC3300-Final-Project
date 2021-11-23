@@ -1,5 +1,6 @@
 #include "xpt2046.h"
 #include "lcd.h"
+#include "misc_sensors.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -439,4 +440,5 @@ void check_touchscreen(void)
 {
 	ucXPT2046_TouchFlag = 1;
 	XPT2046_Get_TouchedPoint(&touchscreen, &strXPT2046_TouchPara);
+	set_vibration_flag();
 }

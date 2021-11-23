@@ -58,6 +58,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
+extern DMA_HandleTypeDef hdma_adc3;
 extern DMA_HandleTypeDef hdma_tim5_ch3_up;
 extern DMA_HandleTypeDef hdma_usart3_rx;
 extern TIM_HandleTypeDef htim7;
@@ -232,6 +233,20 @@ void DMA2_Channel2_IRQHandler(void)
   /* USER CODE BEGIN DMA2_Channel2_IRQn 1 */
 
   /* USER CODE END DMA2_Channel2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 channel4 and channel5 global interrupts.
+  */
+void DMA2_Channel4_5_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Channel4_5_IRQn 0 */
+
+  /* USER CODE END DMA2_Channel4_5_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc3);
+  /* USER CODE BEGIN DMA2_Channel4_5_IRQn 1 */
+
+  /* USER CODE END DMA2_Channel4_5_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

@@ -4,7 +4,7 @@
 struct ACCELSTRUCT accelStruct = {0, 0, 0};
 struct GYROSTRUCT gyroStruct = {0, 0, 0};
 
-ANGLESTRUCT accAngle, gyroAngle, filteredAngle;
+ANGLESTRUCT accAngle, filteredAngle;
 
 #define GYRO_LSB 131.0f
 #define ACCEL_LSB 16384.0f
@@ -114,7 +114,7 @@ void MPU6050_update_data(void)
     // filter_cnt++;
 
     accAngle.angleX = (atan(accelStruct.accelY / sqrt(pow(accelStruct.accelX, 2) + pow(accelStruct.accelZ, 2))) * 180 / M_PI);
-    accAngle.angleY = (atan(-accelStruct.accelX / sqrt(pow(accelStruct.accelY, 2) + pow(accelStruct.accelZ, 2))) * 180 / M_PI);
+    accAngle.angleY = (atan(-accelStruct.accelX / sqrt(pow(accelStruct.accelY, 2) + pow(accelStruct.accelZ, 2))) * 180 / M_PI)+90;
 
     // filteredAngle.angleX = gyroAngle.angleX * 0.96f + accAngle.angleX * 0.04f;
     // filteredAngle.angleY = gyroAngle.angleY * 0.96f + accAngle.angleY * 0.04f;
