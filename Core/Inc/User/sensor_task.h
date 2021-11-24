@@ -7,6 +7,7 @@
 #include "microphone.h"
 #include "DHT11.h"
 #include "clock.h"
+#include "game.h"
 
 void sensor_task_setup();
 void sensor_task_loop();

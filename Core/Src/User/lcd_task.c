@@ -29,6 +29,7 @@ void lcd_task_loop()
     }
     last_mode = system_mode;
 
+    system_mode = SNAKE;
     switch (system_mode)
     {
     case WELCOME:
@@ -78,15 +79,31 @@ void lcd_task_loop()
     case GAME:
         lcd_draw_icon_snake(60, 25);
         lcd_draw_icon_bird(60, 170);
+        if (ucXPT2046_TouchFlag)
+        {
+            // LCD_DrawCross(touchscreen.x, touchscreen.y);
+            if (touchscreen.y < 160)
+            {
+                system_mode = SNAKE;
+            }
+            else if (touchscreen.y > 160)
+            {
+                system_mode = BIRD;
+            }
+            ucXPT2046_TouchFlag = 0;
+        }
         break;
 
     case GALLERY:
         break;
 
     case SNAKE:
+        game_snake();
         break;
 
     case BIRD:
+        game_bird();
+        
         break;
 
     case MUSIC:

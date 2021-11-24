@@ -73,7 +73,7 @@ void 		LCD_DrawEllipse		( uint16_t usC, uint16_t usP, uint16_t SR, uint16_t LR, 
 void LCD_DrawChinese (uint16_t usC, uint16_t usP, uint16_t usColor);
 void LCD_DrawChar_2448_Rotate(uint16_t usC, uint16_t usP, uint16_t usColor, const char c);
 void LCD_DrawChar_2040_Rotate(uint16_t usC, uint16_t usP, uint16_t usColor, const char c);
-
+void LCD_DrawSquare(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t HEIGHT, uint16_t usColor);
 
 void LCD_DrawCross ( uint16_t usX, uint16_t usY );
 void LCD_DrawChar_Color ( uint16_t usC, uint16_t usP, const char cChar, uint16_t usColor_Background, uint16_t usColor_Foreground );

@@ -795,3 +795,11 @@ void lcd_draw_icon_humidity(uint8_t x, uint8_t y)
 {
 	lcd_draw_icon(x, y, 64, 64, *humidity_code);
 }
+
+void LCD_DrawSquare(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t HEIGHT, uint16_t usColor){
+	for(int i = 0; i < HEIGHT; i++){
+		for(int j = 0; j < HEIGHT; j++){
+			LCD_DrawDot(usCOLUMN+i, usPAGE+j, usColor);
+		}
+	}
+}

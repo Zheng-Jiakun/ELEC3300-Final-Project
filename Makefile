@@ -100,7 +100,8 @@ Core/Src/User/xpt2046.c \
 Core/Src/User/clock.c \
 Core/Src/rtc.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc_ex.c
+Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc_ex.c \
+Core/Src/User/game.c
 
 # ASM sources
 ASM_SOURCES =  \

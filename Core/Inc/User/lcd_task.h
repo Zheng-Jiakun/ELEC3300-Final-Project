@@ -8,6 +8,7 @@
 #include "xpt2046.h"
 #include "clock.h"
 #include "adc.h"
+#include "game.h"
 
 void lcd_task_setup();
 void lcd_task_loop();
