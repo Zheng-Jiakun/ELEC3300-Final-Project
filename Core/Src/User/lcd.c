@@ -735,6 +735,30 @@ void LCD_DrawString_2448_Rotate(uint16_t usC, uint16_t usP, const char *pStr)
 	}
 }
 
+void LCD_DrawString_2040_Rotate(uint16_t usC, uint16_t usP, const char *pStr)
+{
+	while (*pStr != '\0')
+	{
+		if ((usC - LCD_DispWindow_Start_COLUMN + WIDTH_EN_CHAR) > LCD_DispWindow_COLUMN)
+		{
+			usC = LCD_DispWindow_Start_COLUMN;
+			usP += HEIGHT_EN_CHAR;
+		}
+
+		if ((usP - LCD_DispWindow_Start_PAGE + HEIGHT_EN_CHAR) > LCD_DispWindow_PAGE)
+		{
+			usC = LCD_DispWindow_Start_COLUMN;
+			usP = LCD_DispWindow_Start_PAGE;
+		}
+
+		LCD_DrawChar_2448_Rotate(usC, usP, BLACK, *pStr);
+
+		pStr++;
+
+		usP += 20;
+	}
+}
+
 void lcd_draw_icon(uint8_t x, uint8_t y, uint8_t size_x, uint8_t size_y, const uint8_t *code)
 {
 	LCD_OpenWindow(x, y, size_x, size_y);

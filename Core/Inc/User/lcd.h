@@ -90,6 +90,7 @@ void lcd_draw_icon_game(uint8_t x, uint8_t y);
 void lcd_draw_icon_temperature(uint8_t x, uint8_t y);
 void lcd_draw_icon_humidity(uint8_t x, uint8_t y);
 void LCD_DrawString_2448_Rotate(uint16_t usC, uint16_t usP, const char *pStr);
+void LCD_DrawString_2040_Rotate(uint16_t usC, uint16_t usP, const char *pStr);
 
 #endif 
 

@@ -51,6 +51,8 @@
 
 /* USER CODE END Variables */
 osThreadId lcdTaskHandle;
+uint32_t lcdTaskBuffer[ 768 ];
+osStaticThreadDef_t lcdTaskControlBlock;
 osThreadId ledTaskHandle;
 osThreadId sensorTaskHandle;
 
@@ -109,7 +111,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of lcdTask */
-  osThreadDef(lcdTask, StartLcdTask, osPriorityAboveNormal, 0, 128);
+  osThreadStaticDef(lcdTask, StartLcdTask, osPriorityAboveNormal, 0, 768, lcdTaskBuffer, &lcdTaskControlBlock);
   lcdTaskHandle = osThreadCreate(osThread(lcdTask), NULL);
 
   /* definition and creation of ledTask */

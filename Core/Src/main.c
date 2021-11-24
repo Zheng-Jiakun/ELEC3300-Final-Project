@@ -22,6 +22,7 @@
 #include "cmsis_os.h"
 #include "adc.h"
 #include "dma.h"
+#include "fatfs.h"
 #include "rtc.h"
 #include "sdio.h"
 #include "tim.h"
@@ -31,7 +32,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "gallery.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,9 +105,10 @@ int main(void)
   MX_RTC_Init();
   MX_TIM6_Init();
   MX_ADC3_Init();
-  // MX_SDIO_SD_Init();
+  MX_SDIO_SD_Init();
+  MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
-
+  
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

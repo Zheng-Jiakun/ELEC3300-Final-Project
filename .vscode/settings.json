@@ -27,6 +27,7 @@
         "cmsis_os.h": "c",
         "hmc5883l.h": "c",
         "misc_sensors.h": "c",
-        "xpt2046.h": "c"
+        "xpt2046.h": "c",
+        "gallery.h": "c"
     }
 }
