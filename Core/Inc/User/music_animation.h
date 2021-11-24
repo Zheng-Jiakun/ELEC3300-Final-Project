@@ -2,7 +2,7 @@
 #define _ANIMATION_H_
 
 #include "main.h"
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 #include "microphone.h"
 #include "lcd.h"
 #include "WS2812B.h"

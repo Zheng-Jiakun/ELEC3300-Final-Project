@@ -2,7 +2,7 @@
 #define CLOCK_H
 
 #include "main.h"
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 #include "rtc.h"
 #include "lcd.h"
 #include "WS2812B.h"

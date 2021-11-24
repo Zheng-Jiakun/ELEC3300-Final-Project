@@ -5,7 +5,7 @@
 #include "adc.h"
 #include "tim.h"
 #include "arm_math.h"
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 
 #define FFT_SAMPLE_NUM    16
 
@@ -17,6 +17,7 @@ extern float fft_magnitude[FFT_NUM];
 extern uint16_t fft_sample_result[FFT_SAMPLE_NUM];
 
 void microphone_init ();
+void microphone_deinit ();
 void process_fft ();
 void fft_magnitude_filter ();
 

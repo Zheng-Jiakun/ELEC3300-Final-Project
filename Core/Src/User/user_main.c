@@ -1,30 +1,58 @@
-#include "lcd_task.h"
+#include "user_main.h"
 
-void lcd_task_setup()
+void user_setup()
 {
-    macXPT2046_CS_DISABLE();
-
-    LCD_set_brightness(999);
     LCD_INIT();
-
-    // while( ! XPT2046_Touch_Calibrate () );
-
-    LCD_GramScan(1);
-
-    gallery_init();
+    LCD_set_brightness(999);
+    WS2812_init();
+    set_led_brightness(50);
+    dht11_init();
+    MPU6050_init();
+    eeprom_init();
+    // HMC5883L_init();
+    clock_init();
+    misc_sensors_init();
 }
 
-void lcd_task_loop()
+void user_loop()
 {
     char char_buf[50];
     static sys_mode_t last_mode;
     if (last_mode != system_mode)
     {
         LCD_Clear(0, 0, 240, 320, 0xffff);
+        clear_all_led();
+
+        if (system_mode == MUSIC && last_mode != MUSIC)
+        {
+            microphone_init();
+        }
+        else if (system_mode != MUSIC && last_mode == MUSIC)
+        {
+            microphone_init();
+        }
+
+        if (system_mode != GALLERY && last_mode == GALLERY)
+        {
+            misc_sensors_init();
+        }
+        else if (system_mode == GALLERY && last_mode != GALLERY)
+        {
+            microphone_deinit();
+            misc_sensors_deinit();
+        }
+
+        if (system_mode == BIRD && last_mode != BIRD)
+        {
+            microphone_init();
+        }
+        else if (system_mode != BIRD && last_mode == BIRD)
+        {
+            microphone_init();
+        }
     }
     last_mode = system_mode;
 
-    system_mode = GALLERY;
     switch (system_mode)
     {
     case WELCOME:
@@ -35,6 +63,7 @@ void lcd_task_loop()
         break;
 
     case CLOCK:
+        update_clock_ui_led();
         update_clock_ui_lcd();
         if (ucXPT2046_TouchFlag)
         {
@@ -44,6 +73,13 @@ void lcd_task_loop()
         break;
 
     case MENU:
+        for (uint8_t i = 0; i < LED_NUM / 2; i++)
+        {
+            led_set_pixel(i);
+            led_fill_mirror();
+        }
+        WS2812_update();
+
         lcd_draw_icon_clock(120, 25);
         lcd_draw_icon_game(0, 25);
         lcd_draw_icon_gallery(120, 170);
@@ -72,12 +108,31 @@ void lcd_task_loop()
         break;
 
     case GAME:
+        for (uint8_t i = 0; i < LED_NUM / 2; i++)
+        {
+            led_set_pixel(i);
+            led_fill_mirror();
+        }
+        WS2812_update();
+
         lcd_draw_icon_snake(60, 25);
         lcd_draw_icon_bird(60, 170);
         break;
 
     case GALLERY:
+        for (uint8_t i = 0; i < LED_NUM / 2; i++)
+        {
+            led_set_pixel(i);
+            led_fill_mirror();
+        }
+        WS2812_update();
+
         gallery_slideshow();
+
+        if (ucXPT2046_TouchFlag)
+        {
+            system_mode = MENU;
+        }
         break;
 
     case SNAKE:
@@ -88,6 +143,12 @@ void lcd_task_loop()
 
     case MUSIC:
         update_lcd_bins();
+        music_update_led();
+        
+        if (ucXPT2046_TouchFlag)
+        {
+            system_mode = MENU;
+        }
         break;
 
     case COMPASS:
@@ -103,5 +164,14 @@ void lcd_task_loop()
         break;
     }
 
-    HAL_Delay(100);
+    vibration_service();
+    buzzer_service();
+    auto_brightness_service();
+
+    if (get_capkey_value() < 2000 || HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
+    {
+        system_mode = MENU;
+        set_vibration_flag();
+        set_buzzer_flag();
+    }
 }

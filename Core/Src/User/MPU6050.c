@@ -39,7 +39,7 @@ void MPU6050_write_byte(uint8_t add, uint8_t val)
 
     iic_send_stop();
 
-    // osDelay(1);
+    // HAL_Delay(1);
 }
 
 void MPU6050_read_byte(uint8_t add, uint8_t *val)

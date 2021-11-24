@@ -19,7 +19,7 @@ void HMC5883L_write_byte(uint8_t add, uint8_t val)
 
     iic_send_stop();
 
-    // osDelay(1);
+    // HAL_Delay(1);
 }
 
 void HMC5883L_read_byte(uint8_t add, uint8_t *val)
@@ -73,7 +73,7 @@ void HMC5883L_update_data()
     // HAL_I2C_Mem_Read(&hi2c2, HMC5883L_Addr<<1, 0x08, 1, &raw_dat, 1, 100);
     // value_y |= raw_dat;
     HMC5883L_write_byte(0x02, mode);
-    osDelay(6);
+    HAL_Delay(6);
     HMC5883L_read_byte(0x03, &raw_dat);
     value_x = raw_dat << 8;
     HMC5883L_read_byte(0x04, &raw_dat);

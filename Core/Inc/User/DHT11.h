@@ -2,7 +2,7 @@
 #define MK_DHT11_H_
 
 #include "main.h"
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 #include "gpio.h"
 #include "tim.h"
 #include "string.h"

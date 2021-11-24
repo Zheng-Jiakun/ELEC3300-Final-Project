@@ -20,6 +20,13 @@ void microphone_init ()
     arm_rfft_fast_init_f32(&s, RAW_SAMPLE_NUM);
 }
 
+void microphone_deinit ()
+{
+    HAL_ADC_Stop_DMA(&hadc1);
+
+    HAL_TIM_Base_Stop(&htim8);
+}
+
 void process_fft ()
 {
     for (uint16_t i = 0; i < RAW_SAMPLE_NUM; i++)

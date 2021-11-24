@@ -2,7 +2,7 @@
 #define HMC5883L_H
 
 #include "main.h"
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 #include "iic.h"
 #include "math.h"
 

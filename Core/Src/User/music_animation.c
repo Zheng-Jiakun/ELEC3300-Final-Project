@@ -26,7 +26,7 @@ void update_lcd_bins()
         LCD_Clear(0, 320 / LCD_BIN_NUM * i, lcd_bin_height[i], 320 / LCD_BIN_NUM, 0x1234);
         LCD_Clear(lcd_bin_height[i], 320 / LCD_BIN_NUM * i, 240 - lcd_bin_height[i], 320 / LCD_BIN_NUM, 0xffff);
     }
-    osDelay(5);
+    HAL_Delay(5);
 }
 
 void led_clear_pixel(uint8_t index)
@@ -94,5 +94,5 @@ void music_update_led ()
     }
     led_fill_mirror();
     WS2812_update();
-    // osDelay(1);
+    // HAL_Delay(1);
 }
