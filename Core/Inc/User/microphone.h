@@ -9,7 +9,7 @@
 
 #define FFT_SAMPLE_NUM    16
 
-#define RAW_SAMPLE_NUM    32
+#define RAW_SAMPLE_NUM    64
 #define FFT_NUM           RAW_SAMPLE_NUM/2
 
 extern uint16_t adc_raw_result[RAW_SAMPLE_NUM];

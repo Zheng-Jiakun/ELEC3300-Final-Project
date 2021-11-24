@@ -163,6 +163,7 @@ void user_loop()
     case MUSIC:
         update_lcd_bins();
         music_update_led();
+        HAL_Delay(1);
         
         if (ucXPT2046_TouchFlag)
         {

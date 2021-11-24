@@ -44,8 +44,19 @@ void process_fft ()
 }
 
 void fft_magnitude_filter ()
-{
-    for (uint8_t i = 0; i < FFT_SAMPLE_NUM; i++)
+{    
+    #if (FFT_NUM == FFT_SAMPLE_NUM)
+        fft_magnitude[0] -= 49600;
+    #else
+    fft_sample_result[0] = 0;
+    for (uint8_t j = 1; j < FFT_NUM/FFT_SAMPLE_NUM; j++)
+    {
+        fft_sample_result[0] += fft_magnitude[j];
+    }
+    fft_sample_result[0] /= (FFT_NUM/FFT_SAMPLE_NUM - 1);
+    #endif
+
+    for (uint8_t i = 1; i < FFT_SAMPLE_NUM; i++)
     {
         fft_sample_result[i] = 0;
         for (uint8_t j = 0; j < FFT_NUM/FFT_SAMPLE_NUM; j++)
