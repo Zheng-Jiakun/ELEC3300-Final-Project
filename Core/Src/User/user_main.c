@@ -63,6 +63,7 @@ void user_loop()
         break;
 
     case CLOCK:
+        dht11_read();
         update_clock_ui_led();
         update_clock_ui_lcd();
         if (ucXPT2046_TouchFlag)
@@ -117,6 +118,19 @@ void user_loop()
 
         lcd_draw_icon_snake(60, 25);
         lcd_draw_icon_bird(60, 170);
+        if (ucXPT2046_TouchFlag)
+        {
+            // LCD_DrawCross(touchscreen.x, touchscreen.y);
+            if (touchscreen.y < 160)
+            {
+                system_mode = SNAKE;
+            }
+            else if (touchscreen.y > 160)
+            {
+                system_mode = BIRD;
+            }
+            ucXPT2046_TouchFlag = 0;
+        }
         break;
 
     case GALLERY:
@@ -136,9 +150,14 @@ void user_loop()
         break;
 
     case SNAKE:
+        MPU6050_update_data();
+        dht11_read();
+        game_snake();
         break;
 
     case BIRD:
+        dht11_read();
+        game_bird();
         break;
 
     case MUSIC:

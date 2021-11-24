@@ -29,6 +29,7 @@
         "misc_sensors.h": "c",
         "xpt2046.h": "c",
         "gallery.h": "c",
-        "user_main.h": "c"
+        "user_main.h": "c",
+        "game.h": "c"
     }
 }

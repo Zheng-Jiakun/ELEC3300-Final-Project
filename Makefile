@@ -99,7 +99,8 @@ Middlewares/Third_Party/FatFs/src/ff_gen_drv.c \
 Middlewares/Third_Party/FatFs/src/option/syscall.c \
 Middlewares/Third_Party/FatFs/src/drivers/sd_diskio.c \
 Core/Src/User/gallery.c \
-Core/Src/User/user_main.c
+Core/Src/User/user_main.c \
+Core/Src/User/game.c
 # Core/Src/User/lcd_task.c
 # Core/Src/User/lcd_task.c# Core/Src/User/lcd_task.c# Core/Src/User/lcd_task.c# Core/Src/User/led_task.c
 # Core/Src/User/sensor_task.c

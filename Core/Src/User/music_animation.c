@@ -19,14 +19,29 @@ void update_lcd_bin_height()
 
 void update_lcd_bins()
 {
-    update_lcd_bin_height();
+    // update_lcd_bin_height();
+    lcd_bin_height[0]++;
+    if (lcd_bin_height[0] > 254)
+        lcd_bin_height[0] = 0;
     // LCD_Clear(0, 0, 240, 320, 0xffff);
     for (uint8_t i = 0; i < LCD_BIN_NUM; i++)
     {
         LCD_Clear(0, 320 / LCD_BIN_NUM * i, lcd_bin_height[i], 320 / LCD_BIN_NUM, 0x1234);
         LCD_Clear(lcd_bin_height[i], 320 / LCD_BIN_NUM * i, 240 - lcd_bin_height[i], 320 / LCD_BIN_NUM, 0xffff);
     }
-    HAL_Delay(5);
+    // static uint8_t last_column_height = 0;
+    // if (led_column_height > LED_NUM/2)
+    //     led_column_height = LED_NUM/2;
+    // if (last_column_height > led_column_height)
+    // {
+    //     led_clear_pixel(last_column_height-1);
+    //     last_column_height--;
+    // }
+    // else if (last_column_height < led_column_height)
+    // {
+    //     led_set_pixel(last_column_height);
+    //     last_column_height++;
+    // }
 }
 
 void led_clear_pixel(uint8_t index)
@@ -79,7 +94,7 @@ void update_led_column_height()
 void music_update_led ()
 {
     update_led_column_height();
-    static uint8_t last_column_height;
+    static uint8_t last_column_height = 0;
     if (led_column_height > LED_NUM/2)
         led_column_height = LED_NUM/2;
     if (last_column_height > led_column_height)

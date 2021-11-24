@@ -18,6 +18,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "clock.h"
+#include "game.h"
 
 void user_setup();
 void user_loop();

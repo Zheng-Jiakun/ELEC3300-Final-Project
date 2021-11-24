@@ -53,7 +53,7 @@ void buzzer_service()
         start_tick = HAL_GetTick();
         start_flag = 1;
     }
-    else if (start_flag == 1 && HAL_GetTick() - start_tick > 10)
+    else if (start_flag == 1 && HAL_GetTick() - start_tick > 2)
     {
         HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
         start_flag = 0;
