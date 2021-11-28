@@ -16,6 +16,7 @@ void user_setup()
 
 void user_loop()
 {
+    system_mode = SNAKE;
     char char_buf[50];
     static sys_mode_t last_mode;
     if (last_mode != system_mode)

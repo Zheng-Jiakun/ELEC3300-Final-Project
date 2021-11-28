@@ -19,17 +19,24 @@ void game_snake(){
      switch (snake_state)
     {
         case GAME_INIT:
+            LCD_Clear(0, 0, 240, 320, 0xffff);
             Snakei = 40; Snakey = 40;  movestate = 0;
-            SnakeLength = 1;
+            SnakeLength = 3;
             //time_t t;
-            srand(HAL_GetTick());
-            Fruitx = (rand() % 240);
-            Fruity = (rand() % 320);
+            //srand(HAL_GetTick());
+            Fruitx = 8+(rand() % 232);
+            Fruity = 8+(rand() % 312);
+            if(Fruitx%8>4)Fruitx+=(8-Fruitx%8);
+            else Fruitx-=Fruitx%8;
+            if(Fruity%8>4)Fruity+=(8-Fruity%8);
+            else Fruity-=Fruity%8;
+            LCD_DrawSquare(Fruitx, Fruity, 5, 0x00FF);
             char buffer[3];
             snake_state = GAME_PLAY;
         break;
 
         case GAME_PLAY:
+            
             /*if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)){
 				LCD_Clear(0, 0, 240, 320, 0xFFFF);
 				Fruitx = rand() % 240;
@@ -37,7 +44,7 @@ void game_snake(){
 				sprintf(buffer, "%d", Fruitx);
 				LCD_DrawString(110, 50, buffer);
 			}*/
-            if(SnakeLength == 1){
+            /*if(SnakeLength == 1){
                 if(Fruitx%8>4)Fruitx+=(8-Fruitx%8);
                 else Fruitx-=Fruitx%8;
                 if(Fruity%8>4)Fruity+=(8-Fruity%8);
@@ -45,7 +52,7 @@ void game_snake(){
                 LCD_DrawSquare(Fruitx, Fruity, 5, 0x00FF);
                 LCD_DrawString(50, 50, "Snake was toot srhto");
                 SnakeLength++; 
-            }
+            }*/
             
             //LCD_DrawSquare(Fruitx, Fruity, 5, 0x00FF);
 			if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13)){
@@ -53,6 +60,13 @@ void game_snake(){
 				movestate++; 
 				if(movestate > 3) movestate = 0;
 			}
+            
+               // sprintf(buffer, "%d", gyroStruct.gyroX);
+                //LCD_DrawString(150, 150, buffer);
+            if(gyroStruct.gyroX>0||gyroStruct.gyroY>0){movestate = 1;}
+            else if(gyroStruct.gyroX>0||gyroStruct.gyroY<0){movestate = 2;}
+            else if(gyroStruct.gyroX<0||gyroStruct.gyroY>0){movestate = 3;}
+            else{movestate = 4;}
 			switch(movestate){
 				case 0:
 					Snakei+=8;
@@ -67,13 +81,15 @@ void game_snake(){
 					Snakey-=8;
 					break;
 			}
-			if(Snakey > 318) {Snakey = 8;} else if(Snakey < 2) {Snakey = 312;}
-			if(Snakei > 238) {Snakei = 8;} else if(Snakei < 2) {Snakei = 232;}
+			//if(Snakey > 318) {Snakey = 8;} else if(Snakey < 2) {Snakey = 312;}
+			//if(Snakei > 238) {Snakei = 8;} else if(Snakei < 2) {Snakei = 232;}
+            if(Snakey > 320){Snakey = 0;}else if(Snakey < 2){Snakey = 320;}
+            if(Snakei > 240){Snakei = 0;}else if(Snakei < 2){Snakei = 240;}
 			LCD_DrawSquare(Snakei, Snakey, 5, 0x00FF);
 			if(Fruitx == Snakei && Fruity == Snakey){
 				SnakeLength++;
-				Fruitx = rand() % 240;
-				Fruity = rand() % 320;
+				Fruitx = 8+rand() % 232;
+				Fruity = 8+rand() % 312;
 				if(Fruitx%8>4)Fruitx+=(8-Fruitx%8);
 				else Fruitx-=Fruitx%8;
 				if(Fruity%8>4)Fruity+=(8-Fruity%8);
@@ -83,11 +99,14 @@ void game_snake(){
 			//LCD_DrawString(240, 50, "Snake of deez nuts");
 			//LCD_DrawString(0, 300, "Snake test");
 			//HAL_Delay(50);
-
-            sprintf(buffer, "%d", Fruitx);
-            LCD_DrawString(150, 50, buffer);
-            sprintf(buffer, "%d", SnakeSpots[0][0]);
-            LCD_DrawString(110, 50, buffer);
+            //LCD_DrawSquare(155, 50, 5, 0x0f0f);
+            if(Fruitx>109&&Fruitx<153&&Fruity>50&&Fruity<69){
+                sprintf(buffer, "%d", SnakeLength-3);
+                LCD_DrawString_2448_Rotate(109, 267, buffer);
+            }else{
+                sprintf(buffer, "%d", SnakeLength-3);
+                LCD_DrawString_2448_Rotate(109, 50, buffer);
+            }
 			for(int t = SnakeLength; t >= 0; t--){
 				if(SnakeSpots[0][t]==Snakei&&SnakeSpots[1][t]==Snakey){SnakeLength = 0;snake_state = GAME_END;break;} //Lose Condition, do something with this.
 				if(t == SnakeLength){LCD_Clear(SnakeSpots[0][t], SnakeSpots[1][t], 5, 5, 0xFFFF);}
@@ -97,7 +116,7 @@ void game_snake(){
         break;
 
         case GAME_END:
-            LCD_DrawString(240, 50, "Gamer");
+            LCD_DrawString_2448_Rotate(108, 56, "GAME OVER");
             if (HAL_GPIO_ReadPin(KEY2_GPIO_Port,KEY2_Pin) == GPIO_PIN_SET)
             {
                 snake_state = GAME_INIT;
@@ -158,9 +177,6 @@ void game_bird()//game_bird_init/game_bird_loop
                     PolePositions[i][1] = 40+(rand()%100);
                     TopPositions[i] = 140-PolePositions[i][1];
                 } //Draw a new pole
-                
-                //sprintf(buffer, "%d", PolePositions[0][0]);
-               // LCD_DrawString_2448_Rotate(10, 10, buffer);
                 
                if(((Bird_y>(240-TopPositions[i])||Bird_y<PolePositions[i][1])&&(PolePositions[i][0] > 160 && PolePositions [i][0]+10<172))
                     ||((Bird_y>(240-TopPositions[i])||Bird_y<PolePositions[i][1])&&(PolePositions[i][0]+12>160 && PolePositions[i][0]<172))
