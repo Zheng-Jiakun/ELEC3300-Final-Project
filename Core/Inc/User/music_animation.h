@@ -20,5 +20,6 @@ void update_led_column_height();
 void music_update_led ();
 void led_set_pixel(uint8_t index);
 void led_fill_mirror ();
+void calc_fft_energy ();
 
 #endif

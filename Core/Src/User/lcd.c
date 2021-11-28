@@ -759,7 +759,7 @@ void LCD_DrawString_2040_Rotate(uint16_t usC, uint16_t usP, const char *pStr)
 	}
 }
 
-void lcd_draw_icon(uint8_t x, uint8_t y, uint8_t size_x, uint8_t size_y, const uint8_t *code)
+void lcd_draw_icon(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, const uint8_t *code)
 {
 	LCD_OpenWindow(x, y, size_x, size_y);
 	LCD_Write_Cmd(CMD_set_pixel);
@@ -768,7 +768,7 @@ void lcd_draw_icon(uint8_t x, uint8_t y, uint8_t size_x, uint8_t size_y, const u
 		for (uint16_t j = 0; j < size_x; j++)
 		{
 			uint16_t color =
-				(*(code + (j + i * size_y) * 3 + 0) * 0x1f / 0xff & 0x1f) << 11 | (*(code + (j + i * size_y) * 3 + 1) * 0x3f / 0xff & 0x3f) << 5 | (*(code + (j + i * size_y) * 3 + 2) * 0x1f / 0xff & 0x1f);
+				(*(code + (j + i * size_x) * 3 + 0) * 0x1f / 0xff & 0x1f) << 11 | (*(code + (j + i * size_x) * 3 + 1) * 0x3f / 0xff & 0x3f) << 5 | (*(code + (j + i * size_x) * 3 + 2) * 0x1f / 0xff & 0x1f);
 			// LCD_DrawDot(i, j, color);
 			LCD_Write_Data(color);
 		}
@@ -820,10 +820,18 @@ void lcd_draw_icon_humidity(uint8_t x, uint8_t y)
 	lcd_draw_icon(x, y, 64, 64, *humidity_code);
 }
 
-void LCD_DrawSquare(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t HEIGHT, uint16_t usColor){
-	for(int i = 0; i < HEIGHT; i++){
-		for(int j = 0; j < HEIGHT; j++){
-			LCD_DrawDot(usCOLUMN+i, usPAGE+j, usColor);
-		}
-	}
+void lcd_draw_flappy_bird(uint8_t x, uint8_t y)
+{
+	lcd_draw_icon(x, y, 15, 15, *flappy_bird_code);
+}
+
+void lcd_draw_grass(uint8_t x, uint8_t y)
+{
+	for (uint8_t i = 0; i < 11; i++)
+		lcd_draw_icon(x, y+i*30, 30, 30, *grass_code);
+}
+
+void LCD_DrawSquare(uint16_t usCOLUMN, uint16_t usPAGE, uint16_t HEIGHT, uint16_t usColor)
+{
+	LCD_Clear(usCOLUMN, usPAGE, HEIGHT, HEIGHT, usColor);
 }

@@ -1,5 +1,7 @@
 #include "user_main.h"
 
+uint8_t clear_eeprom = 0;
+
 void user_setup()
 {
     LCD_INIT();
@@ -12,10 +14,17 @@ void user_setup()
     // HMC5883L_init();
     clock_init();
     misc_sensors_init();
+    system_mode = WELCOME;
 }
 
 void user_loop()
 {
+    if (clear_eeprom)
+    {
+        clear_eeprom = 0;
+        eeprom_write_byte(0, 0);
+        eeprom_write_byte(1, 0);
+    }
     char char_buf[50];
     static sys_mode_t last_mode;
     if (last_mode != system_mode)
@@ -59,7 +68,7 @@ void user_loop()
         LCD_DrawString_2448_Rotate(108, 76, "WELCOME");
         LCD_DrawChinese(50, 112, BLUE);
         HAL_Delay(2500);
-        system_mode = CLOCK;
+        system_mode = MENU;
         break;
 
     case CLOCK:
@@ -164,7 +173,7 @@ void user_loop()
         update_lcd_bins();
         music_update_led();
         HAL_Delay(1);
-        
+
         if (ucXPT2046_TouchFlag)
         {
             system_mode = MENU;
@@ -186,7 +195,15 @@ void user_loop()
 
     vibration_service();
     buzzer_service();
-    auto_brightness_service();
+    if (system_mode != MUSIC && system_mode != BIRD  && system_mode != SNAKE)
+    {
+        auto_brightness_service();
+    }
+    else
+    {
+        set_led_brightness(20);
+        LCD_set_brightness(999);
+    }
 
     if (get_capkey_value() < 2000 || HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
     {

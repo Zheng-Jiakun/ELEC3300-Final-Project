@@ -7,6 +7,7 @@ float fft_output[RAW_SAMPLE_NUM];
 float fft_magnitude[FFT_NUM];
 
 uint16_t fft_sample_result[FFT_SAMPLE_NUM];
+uint16_t fft_energy;
 
 arm_rfft_fast_instance_f32 s;
 
@@ -65,4 +66,12 @@ void fft_magnitude_filter ()
         }
         fft_sample_result[i] /= (FFT_NUM/FFT_SAMPLE_NUM);
     }
+}
+
+void calc_fft_energy ()
+{
+    uint32_t fft_average = 0;
+    for (uint16_t i = 0; i < FFT_SAMPLE_NUM; i++)
+        fft_average += fft_sample_result[i];
+    fft_energy = fft_average / FFT_SAMPLE_NUM;
 }

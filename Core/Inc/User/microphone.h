@@ -15,6 +15,7 @@
 extern uint16_t adc_raw_result[RAW_SAMPLE_NUM];
 extern float fft_magnitude[FFT_NUM];
 extern uint16_t fft_sample_result[FFT_SAMPLE_NUM];
+extern uint16_t fft_energy;
 
 void microphone_init ();
 void microphone_deinit ();

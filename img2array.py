@@ -1,9 +1,9 @@
 import numpy as np
 import PIL.Image
 
-an_image = PIL.Image.open("pictures/wifi.jpg")
+an_image = PIL.Image.open("pictures/grass.jpg")
 an_image = an_image.rotate(270)
-an_image = an_image.resize((64, 64))
+# an_image = an_image.resize((30, 320))
 
 image_sequence = an_image.getdata()
 image_array = np.array(image_sequence)

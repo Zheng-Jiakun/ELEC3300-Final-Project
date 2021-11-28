@@ -8,6 +8,13 @@
 #include "DHT11.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "xpt2046.h"
+#include "AT24C02.h"
+#include "WS2812B.h"
+#include "music_animation.h"
+
+#define   ANGLE_THRESHOLD   10
+#define   MIC_THRESHOLD     1000
 
 
 typedef enum {

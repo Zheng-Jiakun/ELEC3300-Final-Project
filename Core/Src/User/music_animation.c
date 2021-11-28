@@ -3,7 +3,7 @@
 #define ABS(x) (((x) > 0) ? (x) : -(x))
 
 uint8_t lcd_bin_height[LCD_BIN_NUM];
-uint8_t led_column_height;
+uint8_t led_column_height = 12;
 
 void lcd_set_block(uint8_t height, uint8_t column)
 {
@@ -28,9 +28,7 @@ void lcd_set_block(uint8_t height, uint8_t column)
     uint16_t color[LCD_BIN_NUM];
     for (uint8_t i = 0; i < LCD_BIN_NUM; i++)
     {
-        color[i] = (color_rgb[i][0] * 0x1f / 0xff & 0x1f) << 11 
-        | (color_rgb[i][1] * 0x3f / 0xff & 0x3f) << 5 
-        | (color_rgb[i][2] * 0x1f / 0xff & 0x1f);
+        color[i] = (color_rgb[i][0] * 0x1f / 0xff & 0x1f) << 11 | (color_rgb[i][1] * 0x3f / 0xff & 0x3f) << 5 | (color_rgb[i][2] * 0x1f / 0xff & 0x1f);
     }
     LCD_Clear(height * 20 + 1, column * 20 + 1, 18, 18, color[column]);
 }
@@ -44,7 +42,7 @@ void update_lcd_bin_height()
 {
     for (uint8_t i = 0; i < LCD_BIN_NUM; i++)
     {
-        lcd_bin_height[i] = fft_sample_result[i] / 500;
+        lcd_bin_height[i] = fft_sample_result[i] / 600;
         if (lcd_bin_height[i] > 12)
         {
             lcd_bin_height[i] = 12;
@@ -97,9 +95,18 @@ void led_set_pixel(uint8_t index)
         {255, 50, 0},
         {255, 0, 0},
     };
-    led_color[index].r = rainbow[index][0];
-    led_color[index].g = rainbow[index][1];
-    led_color[index].b = rainbow[index][2];
+    if (index < LED_NUM / 2)
+    {
+        led_color[index].r = rainbow[index][0];
+        led_color[index].g = rainbow[index][1];
+        led_color[index].b = rainbow[index][2];
+    }
+    else
+    {
+        led_color[index].r = rainbow[index - 12][0];
+        led_color[index].g = rainbow[index - 12][1];
+        led_color[index].b = rainbow[index - 12][2];
+    }
 }
 
 void led_fill_mirror()
@@ -114,10 +121,8 @@ void led_fill_mirror()
 
 void update_led_column_height()
 {
-    uint32_t fft_average = 0;
-    for (uint16_t i = 0; i < FFT_SAMPLE_NUM; i++)
-        fft_average += fft_sample_result[i];
-    led_column_height = fft_average / FFT_SAMPLE_NUM * 0.005f;
+    calc_fft_energy();
+    led_column_height =  fft_energy * 0.004f;
 }
 
 void music_update_led()

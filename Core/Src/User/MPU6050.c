@@ -68,7 +68,7 @@ void MPU6050_update_data(void)
     uint8_t data_H, data_L;
     MPU6050_read_byte(MPU6050_RA_ACCEL_XOUT_H, &data_H);
     MPU6050_read_byte(MPU6050_RA_ACCEL_XOUT_L, &data_L);
-    accelStruct.accelZ = (int16_t)(data_H << 8 | data_L);
+    accelStruct.accelX = (int16_t)(data_H << 8 | data_L);
 
     MPU6050_read_byte(MPU6050_RA_ACCEL_YOUT_H, &data_H);
     MPU6050_read_byte(MPU6050_RA_ACCEL_YOUT_L, &data_L);
@@ -76,7 +76,7 @@ void MPU6050_update_data(void)
 
     MPU6050_read_byte(MPU6050_RA_ACCEL_ZOUT_H, &data_H);
     MPU6050_read_byte(MPU6050_RA_ACCEL_ZOUT_L, &data_L);
-    accelStruct.accelX = (int16_t)(data_H << 8 | data_L);
+    accelStruct.accelZ = (int16_t)(data_H << 8 | data_L);
 
     MPU6050_read_byte(MPU6050_RA_GYRO_XOUT_H, &data_H);
     MPU6050_read_byte(MPU6050_RA_GYRO_XOUT_L, &data_L);
@@ -114,7 +114,7 @@ void MPU6050_update_data(void)
     // filter_cnt++;
 
     accAngle.angleX = (atan(accelStruct.accelY / sqrt(pow(accelStruct.accelX, 2) + pow(accelStruct.accelZ, 2))) * 180 / M_PI);
-    accAngle.angleY = (atan(-accelStruct.accelX / sqrt(pow(accelStruct.accelY, 2) + pow(accelStruct.accelZ, 2))) * 180 / M_PI)+90;
+    accAngle.angleY = (atan(-accelStruct.accelX / sqrt(pow(accelStruct.accelY, 2) + pow(accelStruct.accelZ, 2))) * 180 / M_PI);
 
     // filteredAngle.angleX = gyroAngle.angleX * 0.96f + accAngle.angleX * 0.04f;
     // filteredAngle.angleY = gyroAngle.angleY * 0.96f + accAngle.angleY * 0.04f;
