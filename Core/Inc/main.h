@@ -70,10 +70,12 @@ void Error_Handler(void);
 #define DHT11_DATA_GPIO_Port GPIOE
 #define KEY2_Pin GPIO_PIN_13
 #define KEY2_GPIO_Port GPIOC
+#define JOY_Y_Pin GPIO_PIN_0
+#define JOY_Y_GPIO_Port GPIOC
 #define JOY_X_Pin GPIO_PIN_2
 #define JOY_X_GPIO_Port GPIOC
-#define JOY_Y_Pin GPIO_PIN_3
-#define JOY_Y_GPIO_Port GPIOC
+#define JOY_SW_Pin GPIO_PIN_3
+#define JOY_SW_GPIO_Port GPIOC
 #define KEY1_Pin GPIO_PIN_0
 #define KEY1_GPIO_Port GPIOA
 #define KEY_CAP_Pin GPIO_PIN_1

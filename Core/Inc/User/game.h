@@ -12,9 +12,11 @@
 #include "AT24C02.h"
 #include "WS2812B.h"
 #include "music_animation.h"
+#include "misc_sensors.h"
 
 #define   ANGLE_THRESHOLD   10
 #define   MIC_THRESHOLD     1000
+#define   JOYSTICK_THRESHOLD  1000
 
 
 typedef enum {

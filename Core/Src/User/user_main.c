@@ -205,7 +205,8 @@ void user_loop()
         LCD_set_brightness(999);
     }
 
-    if (get_capkey_value() < 2000 || HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
+    if (HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
+    // if (get_capkey_value() < 2000 || HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_SET)
     {
         system_mode = MENU;
         set_vibration_flag();

@@ -87,6 +87,22 @@ void game_snake()
         {
             movestate = 3;
         }
+        if (get_joyy_value() < 2048-JOYSTICK_THRESHOLD && movestate != 2)
+        {
+            movestate = 0;
+        }
+        else if (get_joyx_value() < 2048-JOYSTICK_THRESHOLD && movestate != 3)
+        {
+            movestate = 1;
+        }
+        else if (get_joyy_value() > 2048+JOYSTICK_THRESHOLD && movestate != 0)
+        {
+            movestate = 2;
+        }
+        else if (get_joyx_value() > 2048+JOYSTICK_THRESHOLD && movestate != 1)
+        {
+            movestate = 3;
+        }
         switch (movestate)
         {
         case 0:
@@ -261,7 +277,7 @@ void game_bird() //game_bird_init/game_bird_loop
         // LCD_DrawString_2448_Rotate(175, 57, buffer);
         led_set_pixel(score);
         WS2812_update();
-        if (HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)
+        if (HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET || HAL_GPIO_ReadPin(JOY_SW_GPIO_Port, JOY_SW_Pin) == GPIO_PIN_RESET)
         {
             //Jump Animation
             // LCD_Clear(Bird_y, 160, 15, 15, 0xFFFF);

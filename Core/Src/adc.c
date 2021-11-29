@@ -99,7 +99,7 @@ void MX_ADC3_Init(void)
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_12;
+  sConfig.Channel = ADC_CHANNEL_10;
   sConfig.Rank = ADC_REGULAR_RANK_3;
   if (HAL_ADC_ConfigChannel(&hadc3, &sConfig) != HAL_OK)
   {
@@ -107,7 +107,7 @@ void MX_ADC3_Init(void)
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_13;
+  sConfig.Channel = ADC_CHANNEL_12;
   sConfig.Rank = ADC_REGULAR_RANK_4;
   if (HAL_ADC_ConfigChannel(&hadc3, &sConfig) != HAL_OK)
   {
@@ -168,12 +168,12 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
     /**ADC3 GPIO Configuration
+    PC0     ------> ADC3_IN10
     PC2     ------> ADC3_IN12
-    PC3     ------> ADC3_IN13
     PA1     ------> ADC3_IN1
     PA2     ------> ADC3_IN2
     */
-    GPIO_InitStruct.Pin = JOY_X_Pin|JOY_Y_Pin;
+    GPIO_InitStruct.Pin = JOY_Y_Pin|JOY_X_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
@@ -190,7 +190,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     hdma_adc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_adc3.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
     hdma_adc3.Init.Mode = DMA_CIRCULAR;
-    hdma_adc3.Init.Priority = DMA_PRIORITY_LOW;
+    hdma_adc3.Init.Priority = DMA_PRIORITY_HIGH;
     if (HAL_DMA_Init(&hdma_adc3) != HAL_OK)
     {
       Error_Handler();
@@ -235,12 +235,12 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_ADC3_CLK_DISABLE();
 
     /**ADC3 GPIO Configuration
+    PC0     ------> ADC3_IN10
     PC2     ------> ADC3_IN12
-    PC3     ------> ADC3_IN13
     PA1     ------> ADC3_IN1
     PA2     ------> ADC3_IN2
     */
-    HAL_GPIO_DeInit(GPIOC, JOY_X_Pin|JOY_Y_Pin);
+    HAL_GPIO_DeInit(GPIOC, JOY_Y_Pin|JOY_X_Pin);
 
     HAL_GPIO_DeInit(GPIOA, KEY_CAP_Pin|LDR_Pin);
 
