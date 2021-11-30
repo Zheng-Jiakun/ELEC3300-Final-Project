@@ -42,7 +42,7 @@ void update_lcd_bin_height()
 {
     for (uint8_t i = 0; i < LCD_BIN_NUM; i++)
     {
-        lcd_bin_height[i] = fft_sample_result[i] / 600;
+        lcd_bin_height[i] = fft_sample_result[i] * LCD_BIN_HEIGHT_FACTOR;
         if (lcd_bin_height[i] > 12)
         {
             lcd_bin_height[i] = 12;
@@ -122,7 +122,7 @@ void led_fill_mirror()
 void update_led_column_height()
 {
     calc_fft_energy();
-    led_column_height =  fft_energy * 0.004f;
+    led_column_height =  fft_energy * LED_HEIGHT_FACTOR;
 }
 
 void music_update_led()

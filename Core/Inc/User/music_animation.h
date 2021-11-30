@@ -14,6 +14,9 @@
 
 #define LCD_BIN_NUM         16
 
+#define LCD_BIN_HEIGHT_FACTOR   0.00125f
+#define LED_HEIGHT_FACTOR       0.003f
+
 void update_lcd_bin_height ();
 void update_lcd_bins ();
 void update_led_column_height();

@@ -96,12 +96,12 @@ void auto_brightness_service ()
         set_led_brightness(10);
         LCD_set_brightness(600);
     }
-    else if (get_ldr_value() > 3000 && get_ldr_value() < 3200)
+    else if (get_ldr_value() > 3000 && get_ldr_value() < 3500)
     {
         set_led_brightness(15);
         LCD_set_brightness(800);
     }
-    else if (get_ldr_value() > 3700)
+    else if (get_ldr_value() > 3500)
     {
         set_led_brightness(20);
         LCD_set_brightness(999);
