@@ -1,2 +1,3 @@
 build/
 *.jdebug
+*.jdebug.user
